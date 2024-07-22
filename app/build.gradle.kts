@@ -6,6 +6,10 @@ plugins {
     alias(libs.plugins.compose.compiler)
 
     alias( libs.plugins.kotlin.serialization)
+
+
+    alias(libs.plugins.ksp)
+
 }
 
 android {
@@ -24,6 +28,9 @@ android {
             useSupportLibrary = true
         }
     }
+
+
+
 
     buildTypes {
         release {
@@ -80,13 +87,60 @@ dependencies {
     // https://mvnrepository.com/artifact/com.airbnb.android/lottie-compose
     implementation(libs.lottie.compose)
 
-    // https://mvnrepository.com/artifact/androidx.paging/paging-runtime-ktx
-    implementation(libs.androidx.paging.runtime.ktx)
+
 
     // https://mvnrepository.com/artifact/androidx.paging/paging-compose
     implementation(libs.androidx.paging.compose)
 
+    //view model
+    // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-viewmodel-compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
+
+    //dataStore preferences
+    implementation(libs.androidx.datastore.preferences)
+
+
+
+    //splash screen
+    implementation(libs.androidx.core.splashscreen)
+
+
+    //constraint layout
+    // https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout-compose
+    implementation(libs.androidx.constraintlayout.compose)
+
+
+    //color picker
+    implementation(libs.colorpicker.compose)
+
+
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation(libs.androidx.room.ktx)
+
+
+    // optional - Paging 3 Integration
+    implementation(libs.androidx.room.paging)
+
+    // https://mvnrepository.com/artifact/androidx.paging/paging-runtime-ktx
+    implementation(libs.androidx.paging.runtime.ktx)
+
+    //room
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    // To use Kotlin Symbol Processing (KSP)
+    ksp(libs.androidx.room.compiler)
+
+
+
+    //koin
+    //koin-android
+    implementation(libs.koin.android)
+    //koin-androidx-navigation
+    implementation(libs.koin.androidx.navigation)
+    //koin-androidx-compose
+    implementation(libs.koin.androidx.compose)
 
 
 }

@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
@@ -15,13 +16,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
+import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.HomeScreen
 import com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.OnboardingScreen
 
 @Composable
 fun NavGraph(
     navHostController: NavHostController,
-    paddingValues: PaddingValues,
-    onShowBars       : (Boolean , Int , Boolean , Int)->Unit = {top, top_shadow , bottom , bottom_shadow->},
+    onShowBars       : (Boolean , Float , Boolean , Float)->Unit = {top, top_shadow , bottom , bottom_shadow->},
     modifier: Modifier = Modifier
 ) {
 
@@ -32,7 +33,7 @@ fun NavGraph(
     ) {
 
         composable<OnboardingScreen>{
-            onShowBars(false , 0 ,false , 0)
+            onShowBars(false , 0f ,false , 0f)
             set_system_bars_color(
                 statusBarColor     = custom_white0,
                 lightStatusBar     = true,
@@ -52,7 +53,7 @@ fun NavGraph(
         }
 
         composable<homeScreen>{
-            onShowBars(true , 4 ,true , 4)
+            onShowBars(true , 4f ,true , 8f)
             set_system_bars_color(
                 statusBarColor     = custom_white0,
                 lightStatusBar     = true,
@@ -60,18 +61,15 @@ fun NavGraph(
                 lightNavigationBar = false
             )
 
-            Box(
+            HomeScreen(
                 modifier = Modifier
-                    .background(custom_white0)
-            ) {
-
-            }
+            )
 
 
         }
 
         composable<analyticsScreen>{
-            onShowBars(false , 0 ,false , 0)
+            onShowBars(false , 0f ,false , 0f)
             set_system_bars_color(
                 statusBarColor     = custom_white0,
                 lightStatusBar     = true,
@@ -83,7 +81,7 @@ fun NavGraph(
         }
 
         composable<aboutUsScreen>{
-            onShowBars(false , 0 ,false , 0)
+            onShowBars(false , 0f ,false , 0f)
             set_system_bars_color(
                 statusBarColor     = custom_white0,
                 lightStatusBar     = true,
