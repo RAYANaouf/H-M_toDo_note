@@ -10,9 +10,11 @@ activityCompose = "1.9.0"
 composeBom = "2024.06.00"
 
 #navigation
+lottieCompose = "6.4.1"
 navigationCompose = "2.8.0-beta05"
 
 #kotlinx serialisation
+pagingRuntimeKtx = "3.3.0"
 serialization = "1.7.1"
 
 
@@ -26,6 +28,8 @@ serialization = "1.7.1"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntimeKtx" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -42,6 +46,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 
 #kolinx serialisation
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
+lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 
 
 

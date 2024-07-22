@@ -70,7 +70,7 @@ fun MainScreen(
         ) {paddingValues ->
 
             NavGraph(
-                navGraphState = navGraphState,
+                navHostController = navGraphState,
                 paddingValues = paddingValues,
                 onShowBars = {topbar , topbar_shadow , bottombar , bottombar_shadow ->
 

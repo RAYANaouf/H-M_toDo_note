@@ -15,13 +15,11 @@ fun NavigationDrawer(
 ) {
 
     ModalNavigationDrawer(
-        modifier = modifier
-            .fillMaxWidth(0.75f),
         drawerContent = {
             Column(
                 modifier = Modifier
+                    .fillMaxWidth(0.75f)
                     .fillMaxHeight()
-                    .fillMaxWidth()
             ) {
 
             }

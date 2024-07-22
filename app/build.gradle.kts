@@ -77,4 +77,16 @@ dependencies {
     //kotlinx serialisation
     implementation(libs.kotlinx.serialization.json)
 
+    // https://mvnrepository.com/artifact/com.airbnb.android/lottie-compose
+    implementation(libs.lottie.compose)
+
+    // https://mvnrepository.com/artifact/androidx.paging/paging-runtime-ktx
+    implementation(libs.androidx.paging.runtime.ktx)
+
+    // https://mvnrepository.com/artifact/androidx.paging/paging-compose
+    implementation(libs.androidx.paging.compose)
+
+
+
+
 }
