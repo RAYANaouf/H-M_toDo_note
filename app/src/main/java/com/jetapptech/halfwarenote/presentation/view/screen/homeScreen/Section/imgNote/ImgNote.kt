@@ -87,7 +87,6 @@ fun ImgNote(
     ) {
         Column(
             modifier = Modifier
-                .background(custom_white1)
         ) {
 
 

@@ -1,6 +1,7 @@
 package com.jetapptech.halfwarenote
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,15 +19,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.jetapptech.InAlpha.presentation.view.material.topBar.TopAppBar
+import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.presentation.nvgraph.NavGraph
+import com.jetapptech.halfwarenote.presentation.nvgraph.homeScreen
 import com.jetapptech.halfwarenote.presentation.ui.theme.HalfwareNoteTheme
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.view.materia.bottomBar.BottomAppBar
 import com.jetapptech.halfwarenote.presentation.view.materia.navigationDrawer.NavigationDrawer
+import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +67,8 @@ fun MainScreen(
 
     val viewModel = MainViewModel()
 
+    val context = LocalContext.current
+    Toast.makeText(context , "${navGraphState.currentBackStackEntryAsState().value?.destination?.id  }" , Toast.LENGTH_LONG).show()
 
     Scaffold(
         topBar = {
@@ -74,7 +82,8 @@ fun MainScreen(
                         img   = R.drawable.logo,
                         elevation = viewModel.topbar_shadow,
                         modifier = Modifier
-                            .fillMaxWidth().height(55.dp)
+                            .fillMaxWidth()
+                            .height(55.dp)
                     )
                 }
             }
@@ -82,15 +91,32 @@ fun MainScreen(
         bottomBar = {
             AnimatedVisibility(visible = viewModel.show_bottombar , modifier = Modifier ) {
                 BottomAppBar(
+                    selected = when( navGraphState.currentBackStackEntryAsState().value?.destination?.route ) {
+                        homeScreen::class.toString() ->{
+                            0
+                        }
+                        homeScreen::class.toString() ->{
+                            0
+                        }
+                        homeScreen::class.toString() ->{
+                            0
+                        }
+                        homeScreen::class.toString() ->{
+                            0
+                        }
+                        else -> {
+                             1
+                        }
+                    } ,
+                    onClick = {
+
+                    },
                     elevation = viewModel.bottombar_shadow,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(55.dp)
                 )
             }
-
-        },
-        floatingActionButton = {
 
         },
         modifier = Modifier
