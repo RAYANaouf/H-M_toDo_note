@@ -1,4 +1,4 @@
-package com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.buttonsSection
+package com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.components.buttonsSection
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background

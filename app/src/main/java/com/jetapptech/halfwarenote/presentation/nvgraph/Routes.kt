@@ -12,6 +12,9 @@ object OnboardingScreen
 object homeScreen
 
 @Serializable
+object addNoteScreen
+
+@Serializable
 object analyticsScreen
 
 @Serializable

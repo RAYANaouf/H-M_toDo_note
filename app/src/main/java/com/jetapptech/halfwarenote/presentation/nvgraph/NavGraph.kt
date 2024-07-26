@@ -16,6 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.AddNoteScreen
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.HomeScreen
 import com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.OnboardingScreen
 
@@ -67,6 +68,25 @@ fun NavGraph(
 
 
         }
+
+
+
+        composable<addNoteScreen>{
+            onShowBars(true , 4f ,true , 8f)
+            set_system_bars_color(
+                statusBarColor     = custom_white0,
+                lightStatusBar     = true,
+                navigationBarColor = custom_white0,
+                lightNavigationBar = false
+            )
+
+            AddNoteScreen(
+                modifier = Modifier
+            )
+
+
+        }
+
 
         composable<analyticsScreen>{
             onShowBars(false , 0f ,false , 0f)

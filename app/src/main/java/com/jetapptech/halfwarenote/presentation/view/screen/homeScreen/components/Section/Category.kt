@@ -1,4 +1,4 @@
-package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.Section
+package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.components.Section
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

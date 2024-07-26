@@ -1,4 +1,4 @@
-package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.Section.imgNote
+package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.components.Section.imgNote
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

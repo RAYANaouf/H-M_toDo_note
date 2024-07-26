@@ -116,8 +116,7 @@ dependencies {
 
 
 
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation(libs.androidx.room.ktx)
+
 
 
     // optional - Paging 3 Integration
@@ -131,6 +130,8 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     // To use Kotlin Symbol Processing (KSP)
     ksp(libs.androidx.room.compiler)
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation(libs.androidx.room.ktx)
 
 
 

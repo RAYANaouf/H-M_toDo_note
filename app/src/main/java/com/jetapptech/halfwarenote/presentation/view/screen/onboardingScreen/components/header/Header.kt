@@ -1,4 +1,4 @@
-package com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.header
+package com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.components.header
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

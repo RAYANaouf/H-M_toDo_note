@@ -19,8 +19,8 @@ import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white1
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white3
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white4
-import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.Section.categoryFilterSection.categoriesFilterSection
-import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.Section.imgNote.ImgNote
+import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.components.Section.categoryFilterSection.categoriesFilterSection
+import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.components.Section.imgNote.ImgNote
 import com.jetapptech.hw_todo_note.presentation.screens.homeScreen.components.NormalNote.NormalNote
 
 

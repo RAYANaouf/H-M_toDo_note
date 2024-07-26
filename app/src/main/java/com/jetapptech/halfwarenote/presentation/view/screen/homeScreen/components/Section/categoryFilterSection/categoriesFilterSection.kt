@@ -1,4 +1,4 @@
-package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.Section.categoryFilterSection
+package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.components.Section.categoryFilterSection
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,7 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.R
-import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.Section.Category
+import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.components.Section.Category
 
 @Composable
 fun categoriesFilterSection(

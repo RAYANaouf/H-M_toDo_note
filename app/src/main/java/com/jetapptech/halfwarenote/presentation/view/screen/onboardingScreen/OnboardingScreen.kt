@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white7
 import com.jetapptech.halfwarenote.presentation.ui.theme.p_color0
-import com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.buttonsSection.ButtonsSection
-import com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.header.Header
+import com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.components.buttonsSection.ButtonsSection
+import com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.components.header.Header
 import com.jetapptech.sigmasea.util.objects.TextStyles
 import kotlinx.coroutines.launch
 
