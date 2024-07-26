@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.jetapptech.InAlpha.presentation.view.material.topBar.TopAppBar
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.presentation.nvgraph.NavGraph
+import com.jetapptech.halfwarenote.presentation.nvgraph.addNoteScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.homeScreen
 import com.jetapptech.halfwarenote.presentation.ui.theme.HalfwareNoteTheme
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
@@ -109,7 +110,10 @@ fun MainScreen(
                         }
                     } ,
                     onClick = {
+                        if(it == 2)
+                            navGraphState.navigate(addNoteScreen){
 
+                            }
                     },
                     elevation = viewModel.bottombar_shadow,
                     modifier = Modifier
