@@ -114,6 +114,10 @@ fun MainScreen(
                             navGraphState.navigate(addNoteScreen){
 
                             }
+                        else
+                            navGraphState.navigate(homeScreen){
+
+                            }
                     },
                     elevation = viewModel.bottombar_shadow,
                     modifier = Modifier
@@ -130,7 +134,9 @@ fun MainScreen(
         NavGraph(
             navHostController = navGraphState,
             onShowBars = {topbar , topbar_shadow , bottombar , bottombar_shadow ->
+                if(topbar != viewModel.show_topbar || topbar_shadow.dp != viewModel.topbar_shadow)
                 viewModel.setTopBar(show = topbar , shadow = topbar_shadow)
+                if(bottombar != viewModel.show_bottombar || bottombar_shadow.dp != viewModel.bottombar_shadow)
                 viewModel.setBottomBar(show = bottombar , shadow = bottombar_shadow)
             },
             modifier = modifier

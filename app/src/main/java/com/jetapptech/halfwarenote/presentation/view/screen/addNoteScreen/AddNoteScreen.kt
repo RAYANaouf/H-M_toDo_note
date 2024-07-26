@@ -1,5 +1,7 @@
 package com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen
 
+import android.util.Base64
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -43,11 +45,14 @@ import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.compon
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.checkBox
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.dialogs.ColorPickerDialog.ColorPickerDialog
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.dialogs.PasswordDialog
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.events.AddNoteEvents
 import com.jetapptech.sigmasea.util.objects.TextStyles
+import java.io.ByteArrayOutputStream
 
 @Composable
 fun AddNoteScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEvent  : (AddNoteEvents)->Unit = {}
 ) {
 
 
@@ -125,6 +130,41 @@ fun AddNoteScreen(
             .clip(RoundedCornerShape(12.dp))
             .background(custom_white0)
     )
+
+
+
+
+    //************ launchers ******************//
+    val getImage = rememberLauncherForActivityResult(contract =  ActivityResultContracts.PickVisualMedia()){url->
+        if (url != null){
+
+
+//            var inputStream = context.contentResolver.openInputStream(url)
+//            val byteArrayOutputStream = ByteArrayOutputStream()
+//
+//            inputStream?.use { stream->
+//                val buffer = ByteArray(1024)
+//                var bytesread : Int
+//
+//                bytesread = stream.read(buffer)
+//                while (bytesread != -1){
+//                    byteArrayOutputStream.write(buffer , 0 , bytesread)
+//                    bytesread = stream.read(buffer)
+//                }
+//
+//                var img_byteArray = byteArrayOutputStream.toByteArray()
+//                var img_string    = Base64.encodeToString(img_byteArray, Base64.DEFAULT)
+//                components.add(Media(img = img_string , index = index++))
+////                Toast.makeText(content , "$img_string" , Toast.LENGTH_LONG).show()
+//            }
+
+
+        }
+
+    }
+
+
+    // UI
 
 
 
@@ -255,7 +295,7 @@ fun AddNoteScreen(
                         components.add(CheckBox(index = index++))
                     }
                     "gallery"->{
-//                        getImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        getImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     }
                     "peindre"->{
                         show_colorPicker = !show_colorPicker
@@ -265,7 +305,7 @@ fun AddNoteScreen(
                     }
                     "done"->{
                         val note_room = Note_Room(title = noteTitle , color = noteColor.toArgb() , password = notePassword , hint = noteHint)
-//                        onEvent(AddNoteEvents.saveNoten(note_room , components))
+                        onEvent(AddNoteEvents.saveNoten(note_room , components))
                     }
                     "lock"->{
                         show_passwordDialog = true

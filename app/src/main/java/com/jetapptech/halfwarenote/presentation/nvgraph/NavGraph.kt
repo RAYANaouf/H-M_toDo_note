@@ -81,6 +81,18 @@ fun NavGraph(
             )
 
             AddNoteScreen(
+                onEvent = {
+//                    viewModel.onEvent(
+//                        event  = it,
+//                        onSave = {
+//                            navGraphState.navigate("home"){
+//                                popUpTo("home"){
+//                                    inclusive = true
+//                                }
+//                            }
+//                        }
+//                    )
+                },
                 modifier = Modifier
             )
 
