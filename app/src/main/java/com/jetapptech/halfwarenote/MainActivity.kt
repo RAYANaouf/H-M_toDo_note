@@ -34,6 +34,8 @@ import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.view.materia.bottomBar.BottomAppBar
 import com.jetapptech.halfwarenote.presentation.view.materia.navigationDrawer.NavigationDrawer
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.HomeScreen
+import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,10 +68,8 @@ fun MainScreen(
 
     val navGraphState = rememberNavController()
 
-    val viewModel = MainViewModel()
+    val viewModel = koinViewModel<MainViewModel>()
 
-    val context = LocalContext.current
-    Toast.makeText(context , "${navGraphState.currentBackStackEntryAsState().value?.destination?.id  }" , Toast.LENGTH_LONG).show()
 
     Scaffold(
         topBar = {
