@@ -194,7 +194,7 @@ fun NavGraph(
 
         composable<analyticsScreen>{
             SideEffect {
-                onShowBars(false , 0f ,false , 0f)
+                onShowBars(true , 4f ,true , 8f)
                 currentScreen(analyticsScreen)
             }
 

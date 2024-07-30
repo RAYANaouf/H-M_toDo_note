@@ -32,6 +32,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -82,6 +83,7 @@ fun ImgNote(
             color = Color(0xFFD0D0D0),
         ),
         modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
             .clickable {
                 onClick(note.id)
 //                Toast.makeText(context , "node Id : ${note.id} \n ${note.components.size}"  , Toast.LENGTH_LONG).show()
@@ -93,14 +95,6 @@ fun ImgNote(
 
 
             if ( img != "" ){
-//                Image(
-//                    bitmap = stringToBitmap(img).asImageBitmap(),
-//                    contentDescription = null,
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .height(200.dp)
-//                )
 
                 AsyncImage(
                     model = File(img),
@@ -126,7 +120,7 @@ fun ImgNote(
                 ){
                     Text(
                         text = note.title,
-                        style = TextStyles.Monospace_TextStyles.TextStyleSZ6.copy(color = custom_black1),
+                        style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = custom_black1),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
@@ -171,7 +165,7 @@ fun ImgNote(
                 }
                 Text(
                     text = (note.components[0] as Paragraph).txt,
-                    style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = custom_black3),
+                    style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = custom_black3),
                     maxLines = 3,
                     modifier = Modifier
                 )
