@@ -28,7 +28,11 @@ import com.jetapptech.InAlpha.presentation.view.material.topBar.TopAppBar
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.presentation.nvgraph.NavGraph
 import com.jetapptech.halfwarenote.presentation.nvgraph.addNoteScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.analyticsScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.homeScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.lateScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.onboardingScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.searchScreen
 import com.jetapptech.halfwarenote.presentation.ui.theme.HalfwareNoteTheme
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.view.materia.bottomBar.BottomAppBar
@@ -92,32 +96,63 @@ fun MainScreen(
         bottomBar = {
             AnimatedVisibility(visible = viewModel.show_bottombar , modifier = Modifier ) {
                 BottomAppBar(
-                    selected = when( navGraphState.currentBackStackEntryAsState().value?.destination?.route ) {
-                        homeScreen::class.toString() ->{
+                    selected = when( viewModel.current_screen ) {
+                        homeScreen ->{
                             0
                         }
-                        homeScreen::class.toString() ->{
-                            0
+                        searchScreen ->{
+                            1
                         }
-                        homeScreen::class.toString() ->{
-                            0
+                        addNoteScreen ->{
+                            2
                         }
-                        homeScreen::class.toString() ->{
-                            0
+                        lateScreen ->{
+                            3
+                        }
+                        analyticsScreen ->{
+                            4
                         }
                         else -> {
-                             1
+                            0
                         }
                     } ,
                     onClick = {
-                        if(it == 2)
-                            navGraphState.navigate(addNoteScreen){
-
-                            }
-                        else
+                        if(it == 0){
+                            if (viewModel.current_screen == homeScreen)
+                                return@BottomAppBar
                             navGraphState.navigate(homeScreen){
 
                             }
+                        }
+                        else if(it == 1){
+                            if (viewModel.current_screen == searchScreen)
+                                return@BottomAppBar
+                            navGraphState.navigate(searchScreen){
+
+                            }
+                        }
+                        else if(it == 2){
+                            if (viewModel.current_screen == addNoteScreen)
+                                return@BottomAppBar
+                            navGraphState.navigate(addNoteScreen){
+
+                            }
+                        }
+                        else if(it == 3){
+                            if (viewModel.current_screen == lateScreen)
+                                return@BottomAppBar
+                            navGraphState.navigate(lateScreen){
+
+                            }
+                        }
+                        else{
+                            if (viewModel.current_screen == analyticsScreen)
+                                return@BottomAppBar
+                            navGraphState.navigate(analyticsScreen){
+
+                            }
+                        }
+
                     },
                     elevation = viewModel.bottombar_shadow,
                     modifier = Modifier
@@ -135,9 +170,12 @@ fun MainScreen(
             navHostController = navGraphState,
             onShowBars = {topbar , topbar_shadow , bottombar , bottombar_shadow ->
                 if(topbar != viewModel.show_topbar || topbar_shadow.dp != viewModel.topbar_shadow)
-                viewModel.setTopBar(show = topbar , shadow = topbar_shadow)
+                    viewModel.setTopBar(show = topbar , shadow = topbar_shadow)
                 if(bottombar != viewModel.show_bottombar || bottombar_shadow.dp != viewModel.bottombar_shadow)
-                viewModel.setBottomBar(show = bottombar , shadow = bottombar_shadow)
+                    viewModel.setBottomBar(show = bottombar , shadow = bottombar_shadow)
+            },
+            currentScreen = {appScreen ->
+                viewModel.setCurrentScreen(appScreen)
             },
             modifier = modifier
                 .fillMaxSize()

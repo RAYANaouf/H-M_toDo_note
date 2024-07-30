@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -26,7 +27,8 @@ import com.jetapptech.hw_todo_note.presentation.screens.homeScreen.components.No
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    notes    : List<Note>,
+    modifier : Modifier = Modifier
 ) {
 
 
@@ -54,28 +56,22 @@ fun HomeScreen(
                 .height(1000.dp)
         ) {
 
-            items(1){
-                ImgNote(
-                    note = Note(title = "image note")
-                )
-            }
-
-            items(1){
-                NormalNote()
-            }
-            items(1){
-                ImgNote()
-            }
-
-            items(1){
-                NormalNote()
-            }
-            items(10){
-                ImgNote()
-            }
-
-            items(10){
-                NormalNote()
+            items(
+                items = notes,
+                key = {
+                    it.id
+                }
+            ){
+                if(it.type == 0){
+                    NormalNote(
+                        note = it
+                    )
+                }
+                else{
+                    ImgNote(
+                        note = it
+                    )
+                }
             }
 
 

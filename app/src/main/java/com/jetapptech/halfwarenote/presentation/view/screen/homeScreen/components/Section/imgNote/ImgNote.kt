@@ -39,6 +39,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.jetapptech.halfwarenote.data.local.dataClasses.Media
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
@@ -46,6 +47,7 @@ import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black1
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black3
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white1
 import com.jetapptech.sigmasea.util.objects.TextStyles
+import java.io.File
 
 @Composable
 fun ImgNote(
@@ -91,8 +93,17 @@ fun ImgNote(
 
 
             if ( img != "" ){
-                Image(
-                    bitmap = stringToBitmap(img).asImageBitmap(),
+//                Image(
+//                    bitmap = stringToBitmap(img).asImageBitmap(),
+//                    contentDescription = null,
+//                    contentScale = ContentScale.Crop,
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .height(200.dp)
+//                )
+
+                AsyncImage(
+                    model = File(img),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -171,11 +182,4 @@ fun ImgNote(
         }
     }
 
-}
-
-
-
-fun stringToBitmap(img : String): Bitmap {
-    val img_bytes = Base64.decode(img , Base64.DEFAULT)
-    return BitmapFactory.decodeByteArray(img_bytes , 0 , img_bytes.size)
 }

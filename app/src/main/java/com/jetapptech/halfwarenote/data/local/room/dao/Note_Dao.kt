@@ -18,6 +18,7 @@ interface Note_Dao{
     suspend fun delete(note  : Note_Room)
 
 
+
     @Transaction
     @Query("select * from Note where id=:noteId")
     suspend fun getNoteById(noteId : Int): NoteAndComponents

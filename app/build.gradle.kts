@@ -84,13 +84,11 @@ dependencies {
     //kotlinx serialisation
     implementation(libs.kotlinx.serialization.json)
 
+    //lottie
     // https://mvnrepository.com/artifact/com.airbnb.android/lottie-compose
     implementation(libs.lottie.compose)
 
 
-
-    // https://mvnrepository.com/artifact/androidx.paging/paging-compose
-    implementation(libs.androidx.paging.compose)
 
     //view model
     // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-viewmodel-compose
@@ -99,7 +97,6 @@ dependencies {
 
     //dataStore preferences
     implementation(libs.androidx.datastore.preferences)
-
 
 
     //splash screen
@@ -111,6 +108,11 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
 
 
+    //coil
+    // https://mvnrepository.com/artifact/io.coil-kt/coil-compose
+    implementation(libs.coil.compose)
+
+
     //color picker
     implementation(libs.colorpicker.compose)
 
@@ -119,11 +121,17 @@ dependencies {
 
 
 
-    // optional - Paging 3 Integration
-    implementation(libs.androidx.room.paging)
+    // https://mvnrepository.com/artifact/androidx.paging/paging-compose
+    implementation(libs.androidx.paging.compose)
 
     // https://mvnrepository.com/artifact/androidx.paging/paging-runtime-ktx
     implementation(libs.androidx.paging.runtime.ktx)
+
+
+    // optional - Paging 3 Integration
+    implementation(libs.androidx.room.paging)
+
+
 
     //room
     implementation(libs.androidx.room.runtime)

@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import coil.compose.AsyncImage
 import com.jetapptech.halfwarenote.data.local.dataClasses.Media
+import java.io.File
 
 @Composable
 fun NoteMedia(
@@ -22,20 +24,25 @@ fun NoteMedia(
     Box(
         modifier = modifier
     ) {
-        Image(
-            bitmap = stringToBitmap(media.img).asImageBitmap() ,
+//        Image(
+//            bitmap = stringToBitmap(media.img).asImageBitmap() ,
+//            contentDescription = null,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//        )
+
+
+        AsyncImage(
+            model = File(media.img),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
         )
+
     }
 
 }
 
 
-fun stringToBitmap(img : String): Bitmap{
-    val img_bytes = Base64.decode(img , Base64.DEFAULT)
-    return BitmapFactory.decodeByteArray(img_bytes , 0 , img_bytes.size)
-}
 
 

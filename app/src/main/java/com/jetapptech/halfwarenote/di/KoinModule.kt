@@ -9,6 +9,7 @@ import com.jetapptech.halfwarenote.data.local.room.dao.Note_Dao_Impl
 import com.jetapptech.halfwarenote.data.local.room.dao.Paragraph_Dao
 import com.jetapptech.halfwarenote.data.local.room.database.Database
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.addNoteViewModel.AddNoteViewModel
+import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.homeViewModel.HomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -21,7 +22,7 @@ val koinModule = module{
             .databaseBuilder(
                 context = androidContext(),
                 klass   = Database::class.java,
-                name    = "myDatabaseV11"
+                name    = "myDatabaseV12"
             )
 //            .addTypeConverter(Converter_Room())
             .fallbackToDestructiveMigration()
@@ -58,6 +59,12 @@ val koinModule = module{
             paragraphDao = get<Paragraph_Dao>(),
             mediaDao = get<Media_Dao>(),
             checkBoxDao = get<CheckBox_Dao>()
+        )
+    }
+
+    viewModel {
+        HomeViewModel(
+            noteDao = get<Note_Dao>()
         )
     }
 

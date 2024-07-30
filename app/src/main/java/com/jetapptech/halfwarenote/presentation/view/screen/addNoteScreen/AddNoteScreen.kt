@@ -1,6 +1,9 @@
 package com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Base64
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.data.local.dataClasses.CheckBox
 import com.jetapptech.halfwarenote.data.local.dataClasses.Media
@@ -48,6 +52,10 @@ import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.dialog
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.events.AddNoteEvents
 import com.jetapptech.sigmasea.util.objects.TextStyles
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.util.Date
 
 @Composable
 fun AddNoteScreen(
@@ -90,6 +98,8 @@ fun AddNoteScreen(
         //because the 0 is the first paragraph in the note which is required
         mutableStateOf(0+1)
     }
+
+    val context = LocalContext.current
 
 
 
@@ -135,8 +145,33 @@ fun AddNoteScreen(
 
 
     //************ launchers ******************//
-    val getImage = rememberLauncherForActivityResult(contract =  ActivityResultContracts.PickVisualMedia()){url->
-        if (url != null){
+    val getImage = rememberLauncherForActivityResult(contract =  ActivityResultContracts.PickVisualMedia()){uri->
+        if (uri != null){
+
+
+            try {
+
+                val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+
+                if (inputStream == null)
+                    return@rememberLauncherForActivityResult
+
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                val file = File(context.filesDir, "fileName_${Date().time}" )
+
+                FileOutputStream(file).use { outputStream ->
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                }
+
+
+                components.add(Media(img = file.absolutePath , index = index++))
+
+            }
+            catch (e : Exception){
+                Toast.makeText(context , e.message , Toast.LENGTH_LONG).show()
+            }
+//            Toast.makeText(context , "${file.absoluteFile}", Toast.LENGTH_LONG ).show()
+
 
 
 //            var inputStream = context.contentResolver.openInputStream(url)
@@ -155,7 +190,7 @@ fun AddNoteScreen(
 //                var img_byteArray = byteArrayOutputStream.toByteArray()
 //                var img_string    = Base64.encodeToString(img_byteArray, Base64.DEFAULT)
 //                components.add(Media(img = img_string , index = index++))
-////                Toast.makeText(content , "$img_string" , Toast.LENGTH_LONG).show()
+//                Toast.makeText(content , "$img_string" , Toast.LENGTH_LONG).show()
 //            }
 
 
@@ -305,6 +340,7 @@ fun AddNoteScreen(
                     }
                     "done"->{
                         val note_room = Note_Room(title = noteTitle , color = noteColor.toArgb() , password = notePassword , hint = noteHint)
+                        Toast.makeText(context , "${components.size}" , Toast.LENGTH_LONG).show()
                         onEvent(AddNoteEvents.saveNoten(note_room , components))
                     }
                     "lock"->{

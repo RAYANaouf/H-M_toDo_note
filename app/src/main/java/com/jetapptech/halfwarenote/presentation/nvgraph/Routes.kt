@@ -5,19 +5,29 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-object OnboardingScreen
+open class AppScreen
+
+@Serializable
+object onboardingScreen : AppScreen()
 
 
 @Serializable
-object homeScreen
+object homeScreen : AppScreen()
 
 @Serializable
-object addNoteScreen
+object searchScreen : AppScreen()
 
 @Serializable
-object analyticsScreen
+object addNoteScreen : AppScreen()
+
 
 @Serializable
-object aboutUsScreen
+object lateScreen : AppScreen()
+
+@Serializable
+object analyticsScreen : AppScreen()
+
+@Serializable
+object aboutUsScreen : AppScreen()
 
 

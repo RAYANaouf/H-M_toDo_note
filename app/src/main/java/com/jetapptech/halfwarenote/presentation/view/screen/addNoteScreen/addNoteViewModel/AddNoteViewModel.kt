@@ -18,6 +18,9 @@ import com.jetapptech.halfwarenote.data.local.room.entities.CheckBox_Room
 import com.jetapptech.halfwarenote.data.local.room.entities.Media_Room
 import com.jetapptech.halfwarenote.data.local.room.entities.Paragraph_Room
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.events.AddNoteEvents
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.screenData.AddNoteScreen_Scene
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.screenData.main
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.screenData.saving
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -27,7 +30,7 @@ import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-//@HiltViewModel
+
 class AddNoteViewModel  constructor(
     private val noteDao      : Note_Dao,
     private val paragraphDao : Paragraph_Dao,
@@ -37,7 +40,7 @@ class AddNoteViewModel  constructor(
 
 
 
-    var scene by mutableStateOf("main")
+    var scene : AddNoteScreen_Scene by mutableStateOf(main)
 
 
 
@@ -45,7 +48,7 @@ class AddNoteViewModel  constructor(
         when(event){
             is AddNoteEvents.saveNoten -> {
 
-                scene = "saving"
+                scene = saving
 
 
                 GlobalScope.launch {
@@ -79,9 +82,7 @@ class AddNoteViewModel  constructor(
                     childJob.join()
 
                     withContext(Dispatchers.Main){
-//                        scene = "main"
                         onSave()
-//                        Toast.makeText(context , "$notesAndComponents" , Toast.LENGTH_LONG).show()
                     }
 
 
