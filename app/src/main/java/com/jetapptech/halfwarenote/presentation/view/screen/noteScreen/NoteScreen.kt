@@ -16,15 +16,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.jetapptech.hw_todo_note.data.local.dataClasses.CheckBox
-import com.jetapptech.hw_todo_note.data.local.dataClasses.Media
-import com.jetapptech.hw_todo_note.data.local.dataClasses.Note
-import com.jetapptech.hw_todo_note.data.local.dataClasses.Paragraph
-import com.jetapptech.hw_todo_note.presentation.screens.addNoteScreen.components.NoteMedia
-import com.jetapptech.hw_todo_note.presentation.screens.addNoteScreen.components.NoteTitle
-import com.jetapptech.hw_todo_note.presentation.screens.addNoteScreen.components.Paragraph
-import com.jetapptech.hw_todo_note.presentation.screens.addNoteScreen.components.checkBox
-import com.jetapptech.hw_todo_note.presentation.ui.theme.custom_white2
+import com.jetapptech.halfwarenote.data.local.dataClasses.CheckBox
+import com.jetapptech.halfwarenote.data.local.dataClasses.Media
+import com.jetapptech.halfwarenote.data.local.dataClasses.Note
+import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
+import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white2
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.NoteMedia
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.NoteTitle
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.Paragraph
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.checkBox
 import com.jetapptech.sigmasea.util.objects.TextStyles
 
 @Composable

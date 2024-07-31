@@ -2,7 +2,6 @@ package com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Base64
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -47,11 +46,10 @@ import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.compon
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.Paragraph
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.ToolBar
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.checkBox
-import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.dialogs.ColorPickerDialog.ColorPickerDialog
-import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.dialogs.PasswordDialog
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.dialogs.ColorPickerDialog
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.dialogs.PasswordDialog
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.events.AddNoteEvents
 import com.jetapptech.sigmasea.util.objects.TextStyles
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream

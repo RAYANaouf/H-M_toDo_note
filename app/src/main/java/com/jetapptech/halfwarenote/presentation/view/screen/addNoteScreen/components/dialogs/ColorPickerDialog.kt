@@ -1,4 +1,4 @@
-package com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.dialogs.ColorPickerDialog
+package com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.dialogs
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

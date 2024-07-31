@@ -1,4 +1,4 @@
-package com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.dialogs
+package com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.dialogs
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

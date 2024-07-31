@@ -6,20 +6,31 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -31,10 +42,12 @@ import com.jetapptech.halfwarenote.presentation.nvgraph.addNoteScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.analyticsScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.homeScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.lateScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.noteScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.onboardingScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.searchScreen
 import com.jetapptech.halfwarenote.presentation.ui.theme.HalfwareNoteTheme
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
+import com.jetapptech.halfwarenote.presentation.ui.theme.p_color0
 import com.jetapptech.halfwarenote.presentation.view.materia.bottomBar.BottomAppBar
 import com.jetapptech.halfwarenote.presentation.view.materia.navigationDrawer.NavigationDrawer
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.HomeScreen
@@ -74,6 +87,11 @@ fun MainScreen(
 
     val viewModel = koinViewModel<MainViewModel>()
 
+    val context = LocalContext.current
+
+//    Toast.makeText( context , "${viewModel.current_screen}" , Toast.LENGTH_LONG).show()
+//    Toast.makeText(context , "is : ${viewModel.current_screen}\n ${noteScreen} \n  ${viewModel.current_screen is  noteScreen} " , Toast.LENGTH_LONG).show()
+
 
     Scaffold(
         topBar = {
@@ -84,7 +102,32 @@ fun MainScreen(
                 AnimatedVisibility(visible = viewModel.show_topbar , modifier = Modifier ) {
                     TopAppBar(
                         title = "H@W Note",
-                        img   = R.drawable.logo,
+                        leading   = {
+                            Box(
+                                contentAlignment = Alignment.CenterStart,
+                                modifier = Modifier
+                            ){
+                                Image(
+                                    painter = painterResource(
+                                        id = if(viewModel.current_screen is noteScreen) {R.drawable.go_back} else {R.drawable.logo}
+                                    ) ,
+                                    contentDescription = null,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .clip(CircleShape)
+                                        .border(
+                                            width = 2.dp,
+                                            color = if(viewModel.current_screen is noteScreen) { Color.Transparent } else {p_color0},
+                                            shape = CircleShape
+                                        )
+                                        .size(if(viewModel.current_screen is noteScreen) { 30.dp } else {40.dp})
+                                        .clickable {
+
+                                        }
+
+                                )
+                            }
+                        },
                         elevation = viewModel.topbar_shadow,
                         modifier = Modifier
                             .fillMaxWidth()

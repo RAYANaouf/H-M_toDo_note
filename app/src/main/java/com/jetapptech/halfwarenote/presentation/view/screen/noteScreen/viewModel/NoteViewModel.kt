@@ -1,4 +1,4 @@
-package com.jetapptech.hw_todo_note.presentation.screens.noteScreen.viewModel
+package com.jetapptech.halfwarenote.presentation.view.screen.noteScreen.viewModel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,20 +6,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jetapptech.hw_todo_note.data.local.dataClasses.CheckBox
-import com.jetapptech.hw_todo_note.data.local.dataClasses.Media
-import com.jetapptech.hw_todo_note.data.local.dataClasses.Note
-import com.jetapptech.hw_todo_note.data.local.dataClasses.NoteComponent
-import com.jetapptech.hw_todo_note.data.local.dataClasses.Paragraph
-import com.jetapptech.hw_todo_note.data.local.room.dao.Note_Dao
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
+import com.jetapptech.halfwarenote.data.local.dataClasses.CheckBox
+import com.jetapptech.halfwarenote.data.local.dataClasses.Media
+import com.jetapptech.halfwarenote.data.local.dataClasses.Note
+import com.jetapptech.halfwarenote.data.local.dataClasses.NoteComponent
+import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
+import com.jetapptech.halfwarenote.data.local.room.dao.Note_Dao
 import kotlinx.coroutines.launch
 import java.util.Date
-import javax.inject.Inject
 
-@HiltViewModel
-class NoteViewModel @Inject constructor(
+
+
+class NoteViewModel  constructor(
     private val noteDao: Note_Dao
 ): ViewModel() {
 

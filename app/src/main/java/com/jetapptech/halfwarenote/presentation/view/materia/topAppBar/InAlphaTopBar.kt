@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,11 +37,12 @@ import com.jetapptech.sigmasea.util.objects.TextStyles
 
 @Composable
 fun TopAppBar(
-    title            : String = "",
-    @DrawableRes img : Int? = null,
-    elevation : Dp = 1.dp,
-    modifier  : Modifier = Modifier,
+    title      : String = "",
+    leading    : @Composable RowScope.()->Unit = {},
+    elevation  : Dp = 1.dp,
+    modifier   : Modifier = Modifier,
 ) {
+
 
     Surface(
         shadowElevation = elevation,
@@ -53,27 +56,8 @@ fun TopAppBar(
         ) {
             Spacer(modifier = Modifier.width(24.dp))
 
-            if(img != null){
-                Box(
-                    contentAlignment = Alignment.CenterStart,
-                    modifier = Modifier
-                        .size(40.dp)
-                ){
-                    Image(
-                        painter = painterResource(id = img) ,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(CircleShape)
-                            .border(
-                                width = 2.dp,
-                                color = p_color0,
-                                shape = CircleShape
-                            )
-                    )
-                }
-            }
+
+            leading()
 
             Spacer(modifier = Modifier.width(16.dp))
 

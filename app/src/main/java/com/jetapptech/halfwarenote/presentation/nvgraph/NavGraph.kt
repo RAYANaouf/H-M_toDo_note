@@ -19,16 +19,20 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.AddNoteScreen
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.addNoteViewModel.AddNoteViewModel
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.screenData.main
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.HomeScreen
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.homeViewModel.HomeViewModel
+import com.jetapptech.halfwarenote.presentation.view.screen.noteScreen.viewModel.NoteViewModel
 import com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.OnboardingScreen
+import com.jetapptech.hw_todo_note.presentation.screens.noteScreen.NoteScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -90,6 +94,14 @@ fun NavGraph(
 
             HomeScreen(
                 notes = homeViewMoodel.notes,
+                onClick = {noteId ->
+                    navHostController
+                        .navigate(
+                            noteScreen(
+                                noteId = noteId
+                            )
+                        )
+                },
                 modifier = Modifier
             )
 
@@ -118,6 +130,35 @@ fun NavGraph(
             ) {
                 Text(text = "search screen" )
             }
+
+
+        }
+
+
+        composable<noteScreen>{
+
+            val arg = it.toRoute<noteScreen>()
+
+            SideEffect {
+                onShowBars(true , 4f ,false , 8f)
+                currentScreen(noteScreen(noteId = arg.noteId))
+            }
+
+            set_system_bars_color(
+                statusBarColor     = custom_white0,
+                lightStatusBar     = true,
+                navigationBarColor = custom_white0,
+                lightNavigationBar = false
+            )
+
+
+            val noteViewModel = koinViewModel<NoteViewModel>()
+
+            noteViewModel.getNoteById( noteId = arg.noteId )
+
+            NoteScreen(
+                note = noteViewModel.note
+            )
 
 
         }

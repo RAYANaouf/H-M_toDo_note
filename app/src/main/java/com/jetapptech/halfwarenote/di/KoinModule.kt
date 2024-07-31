@@ -10,6 +10,7 @@ import com.jetapptech.halfwarenote.data.local.room.dao.Paragraph_Dao
 import com.jetapptech.halfwarenote.data.local.room.database.Database
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.addNoteViewModel.AddNoteViewModel
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.homeViewModel.HomeViewModel
+import com.jetapptech.halfwarenote.presentation.view.screen.noteScreen.viewModel.NoteViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -65,6 +66,12 @@ val koinModule = module{
     viewModel {
         HomeViewModel(
             noteDao = get<Note_Dao>()
+        )
+    }
+
+    viewModel {
+        NoteViewModel(
+            noteDao = get()
         )
     }
 

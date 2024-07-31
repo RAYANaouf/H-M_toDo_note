@@ -28,6 +28,7 @@ import com.jetapptech.hw_todo_note.presentation.screens.homeScreen.components.No
 @Composable
 fun HomeScreen(
     notes    : List<Note>,
+    onClick  : (Int)->Unit = {},
     modifier : Modifier = Modifier
 ) {
 
@@ -64,12 +65,18 @@ fun HomeScreen(
             ){
                 if(it.type == 0){
                     NormalNote(
-                        note = it
+                        note = it,
+                        onClick = {noteId->
+                            onClick(noteId)
+                        }
                     )
                 }
                 else{
                     ImgNote(
-                        note = it
+                        note = it,
+                        onClick = {noteId->
+                            onClick(noteId)
+                        }
                     )
                 }
             }
