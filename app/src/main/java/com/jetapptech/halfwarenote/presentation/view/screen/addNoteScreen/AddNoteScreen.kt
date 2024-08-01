@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +52,8 @@ import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.compon
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.dialogs.PasswordDialog
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.events.AddNoteEvents
 import com.jetapptech.sigmasea.util.objects.TextStyles
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -100,6 +103,9 @@ fun AddNoteScreen(
 
     val context = LocalContext.current
 
+    val coroutineScope = rememberCoroutineScope()
+
+
 
 
 
@@ -147,24 +153,26 @@ fun AddNoteScreen(
     val getImage = rememberLauncherForActivityResult(contract =  ActivityResultContracts.PickVisualMedia()){uri->
         if (uri != null){
 
-            try {
+            coroutineScope.launch(Dispatchers.IO) {
 
-                val inputStream: InputStream = context.contentResolver.openInputStream(uri) ?: return@rememberLauncherForActivityResult
+                try {
 
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                val file = File(context.filesDir, "fileName_${Date().time}" )
+                    val inputStream: InputStream = context.contentResolver.openInputStream(uri) ?: return@launch
 
-                FileOutputStream(file).use { outputStream ->
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    val file = File(context.filesDir, "fileName_${Date().time}" )
+                    FileOutputStream(file).use { outputStream ->
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                    }
+                    components.add(Media(img = file.absolutePath , index = index++))
+
+
                 }
-
-
-                components.add(Media(img = file.absolutePath , index = index++))
-
+                catch (e : Exception){
+                    Toast.makeText(context , e.message , Toast.LENGTH_LONG).show()
+                }
             }
-            catch (e : Exception){
-                Toast.makeText(context , e.message , Toast.LENGTH_LONG).show()
-            }
+
 
         }
 

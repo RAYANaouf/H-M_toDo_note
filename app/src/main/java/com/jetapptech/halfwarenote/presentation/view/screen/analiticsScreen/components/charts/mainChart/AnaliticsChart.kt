@@ -1,4 +1,4 @@
-package com.jetapptech.halfwarenote.presentation.view.screen.analiticsScreen.components.charts
+package com.jetapptech.halfwarenote.presentation.view.screen.analiticsScreen.components.charts.mainChart
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -19,12 +19,14 @@ import co.yml.charts.ui.linechart.model.LineType
 import co.yml.charts.ui.linechart.model.SelectionHighlightPoint
 import co.yml.charts.ui.linechart.model.SelectionHighlightPopUp
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
+import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.ui.theme.p_color0
 import com.jetapptech.halfwarenote.presentation.ui.theme.p_color1
 
 
 @Composable
 fun AnaliticsChart(
+    backgroundColor: Color = custom_white0,
     modifier: Modifier = Modifier
 ) {
 
@@ -50,7 +52,7 @@ fun AnaliticsChart(
 
     val xAxisData = AxisData.Builder()
         .axisStepSize(60.dp)
-        .backgroundColor(Color.Transparent)
+        .backgroundColor(backgroundColor)
         .steps(pointsData.size - 1)
         .labelData {
                 i -> (i+1).toString() + "/8"
@@ -63,7 +65,7 @@ fun AnaliticsChart(
 
     val yAxisData = AxisData.Builder()
         .steps(steps)
-        .backgroundColor(Color.Transparent)
+        .backgroundColor(backgroundColor)
         .labelAndAxisLinePadding(20.dp)
         .labelData { i->
             val yScale = 100 / steps
@@ -95,7 +97,7 @@ fun AnaliticsChart(
                 )
             ),
         ),
-        backgroundColor = MaterialTheme.colorScheme.surface,
+        backgroundColor = backgroundColor,
         xAxisData = xAxisData,
         yAxisData = yAxisData,
         gridLines = GridLines(color = MaterialTheme.colorScheme.outlineVariant)

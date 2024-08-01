@@ -35,7 +35,6 @@ fun HomeScreen(
 
     Column(
         modifier = modifier
-            .background(custom_white1)
             .verticalScroll(rememberScrollState())
     ) {
 

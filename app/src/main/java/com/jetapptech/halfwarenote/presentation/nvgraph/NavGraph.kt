@@ -26,6 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
+import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white1
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.AddNoteScreen
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.addNoteViewModel.AddNoteViewModel
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.screenData.main
@@ -47,7 +48,7 @@ fun NavGraph(
 
     NavHost(
         navController    = navHostController,
-        startDestination = onboardingScreen,
+        startDestination = analyticsScreen,
         modifier         = modifier
     ) {
 
@@ -92,10 +93,10 @@ fun NavGraph(
             )
 
 
-            val homeViewMoodel = koinViewModel<HomeViewModel>()
+            val homeViewModel = koinViewModel<HomeViewModel>()
 
             HomeScreen(
-                notes = homeViewMoodel.notes,
+                notes = homeViewModel.notes,
                 onClick = {noteId ->
                     navHostController
                         .navigate(
@@ -105,6 +106,7 @@ fun NavGraph(
                         )
                 },
                 modifier = Modifier
+                    .background(custom_white1)
             )
 
 
@@ -251,6 +253,7 @@ fun NavGraph(
             AnaliticsScreen(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(custom_white1)
             )
 
 
