@@ -8,6 +8,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -146,13 +147,9 @@ fun AddNoteScreen(
     val getImage = rememberLauncherForActivityResult(contract =  ActivityResultContracts.PickVisualMedia()){uri->
         if (uri != null){
 
-
             try {
 
-                val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
-
-                if (inputStream == null)
-                    return@rememberLauncherForActivityResult
+                val inputStream: InputStream = context.contentResolver.openInputStream(uri) ?: return@rememberLauncherForActivityResult
 
                 val bitmap = BitmapFactory.decodeStream(inputStream)
                 val file = File(context.filesDir, "fileName_${Date().time}" )
@@ -168,29 +165,6 @@ fun AddNoteScreen(
             catch (e : Exception){
                 Toast.makeText(context , e.message , Toast.LENGTH_LONG).show()
             }
-//            Toast.makeText(context , "${file.absoluteFile}", Toast.LENGTH_LONG ).show()
-
-
-
-//            var inputStream = context.contentResolver.openInputStream(url)
-//            val byteArrayOutputStream = ByteArrayOutputStream()
-//
-//            inputStream?.use { stream->
-//                val buffer = ByteArray(1024)
-//                var bytesread : Int
-//
-//                bytesread = stream.read(buffer)
-//                while (bytesread != -1){
-//                    byteArrayOutputStream.write(buffer , 0 , bytesread)
-//                    bytesread = stream.read(buffer)
-//                }
-//
-//                var img_byteArray = byteArrayOutputStream.toByteArray()
-//                var img_string    = Base64.encodeToString(img_byteArray, Base64.DEFAULT)
-//                components.add(Media(img = img_string , index = index++))
-//                Toast.makeText(content , "$img_string" , Toast.LENGTH_LONG).show()
-//            }
-
 
         }
 

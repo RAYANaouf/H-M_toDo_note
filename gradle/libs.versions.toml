@@ -35,6 +35,7 @@ serialization = "1.7.1"
 #######################  plugins
 
 ksp_version = "2.0.0-1.0.23"
+ycharts = "2.1.0"
 
 
 
@@ -80,6 +81,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
+ycharts = { module = "co.yml:ycharts", version.ref = "ycharts" }
 
 
 

@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId = "com.jetapptech.halfwarenote"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -116,6 +116,9 @@ dependencies {
     //color picker
     implementation(libs.colorpicker.compose)
 
+    //charts (kmp)
+    // https://mvnrepository.com/artifact/co.yml/ychat
+    implementation(libs.ycharts)
 
 
 

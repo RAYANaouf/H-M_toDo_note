@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -28,6 +29,7 @@ import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.AddNoteScreen
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.addNoteViewModel.AddNoteViewModel
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.screenData.main
+import com.jetapptech.halfwarenote.presentation.view.screen.analiticsScreen.AnaliticsScreen
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.HomeScreen
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.homeViewModel.HomeViewModel
 import com.jetapptech.halfwarenote.presentation.view.screen.noteScreen.viewModel.NoteViewModel
@@ -244,6 +246,11 @@ fun NavGraph(
                 lightStatusBar     = true,
                 navigationBarColor = custom_white0,
                 lightNavigationBar = false
+            )
+
+            AnaliticsScreen(
+                modifier = Modifier
+                    .fillMaxSize()
             )
 
 

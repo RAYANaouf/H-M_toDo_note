@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.jetapptech.halfwarenote.data.local.dataClasses.CheckBox
 import com.jetapptech.halfwarenote.data.local.dataClasses.Media
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
@@ -51,7 +52,7 @@ class AddNoteViewModel  constructor(
                 scene = saving
 
 
-                GlobalScope.launch {
+                viewModelScope.launch {
 
                     val noteId = async {
                         noteDao.insert(event.note)
