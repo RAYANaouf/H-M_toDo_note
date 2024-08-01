@@ -95,6 +95,9 @@ fun AddNoteScreen(
     var show_passwordDialog by remember {
         mutableStateOf(false)
     }
+    var show_categoryDialog by remember {
+        mutableStateOf(false)
+    }
 
     var index by remember {
         //because the 0 is the first paragraph in the note which is required
@@ -325,6 +328,9 @@ fun AddNoteScreen(
                     }
                     "lock"->{
                         show_passwordDialog = true
+                    }
+                    "category"->{
+                        show_categoryDialog = true
                     }
                 }
             },

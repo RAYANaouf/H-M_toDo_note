@@ -9,23 +9,27 @@ import com.jetapptech.halfwarenote.data.local.dataClasses.Media
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.data.local.dataClasses.NoteComponent
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
+import com.jetapptech.halfwarenote.data.local.room.dao.Category_Dao
 import com.jetapptech.halfwarenote.data.local.room.dao.Note_Dao
+import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
 import com.jetapptech.halfwarenote.data.local.room.relations.NoteAndComponents
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.util.Date
 
 class HomeViewModel(
-    val noteDao: Note_Dao
+    val noteDao: Note_Dao,
+    val categoryDao : Category_Dao
 ) : ViewModel() {
 
 
     var notes = mutableStateListOf<Note>()
         private set
-
+    var categories = mutableStateListOf<Category_Room>()
 
     init {
         getNotes()
+        getCategories()
     }
 
     fun getNotes(){
@@ -106,6 +110,15 @@ class HomeViewModel(
 
         }
 
+    }
+
+    fun getCategories(){
+        viewModelScope.launch {
+            categoryDao.getCategories().collect{
+                categories.clear()
+                categories.addAll(it)
+            }
+        }
     }
 
 }

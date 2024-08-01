@@ -23,7 +23,7 @@ val koinModule = module{
             .databaseBuilder(
                 context = androidContext(),
                 klass   = Database::class.java,
-                name    = "myDatabaseV12"
+                name    = "myDatabaseV13"
             )
 //            .addTypeConverter(Converter_Room())
             .fallbackToDestructiveMigration()
@@ -50,6 +50,10 @@ val koinModule = module{
         get<Database>().paragraphDao
     }
 
+    single {
+        get<Database>().categoryDao
+    }
+
 
 
 
@@ -65,7 +69,8 @@ val koinModule = module{
 
     viewModel {
         HomeViewModel(
-            noteDao = get<Note_Dao>()
+            noteDao = get<Note_Dao>(),
+            categoryDao = get()
         )
     }
 

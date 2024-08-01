@@ -31,9 +31,10 @@ fun ToolBar(
 
 
     val constraints = ConstraintSet {
-        var tool = createRefFor("tool")
-        var lock = createRefFor("lock")
-        var done = createRefFor("done")
+        var tool      = createRefFor("tool")
+        var lock      = createRefFor("lock")
+        var done      = createRefFor("done")
+        var category  = createRefFor("category")
 
         constrain(tool){
             start.linkTo(parent.start   , margin = 16.dp)
@@ -62,6 +63,16 @@ fun ToolBar(
             width  = Dimension.value(50.dp)
             height = Dimension.value(50.dp)
 
+        }
+
+        constrain(category){
+            start.linkTo(done.start)
+            end.linkTo(done.end)
+            bottom.linkTo(lock.top , margin = 16.dp)
+
+
+            width  = Dimension.value(50.dp)
+            height = Dimension.value(50.dp)
         }
 
 
@@ -203,6 +214,24 @@ fun ToolBar(
         ) {
             Image(
                 painter  = painterResource(id = R.drawable.done),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(30.dp)
+            )
+        }
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .clip(CircleShape)
+                .background(custom_white2)
+                .layoutId("category")
+                .clickable {
+                    onClick("category")
+                }
+        ) {
+            Image(
+                painter  = painterResource(id = R.drawable.categories),
                 contentDescription = null,
                 modifier = Modifier
                     .size(30.dp)

@@ -95,6 +95,10 @@ fun NavGraph(
 
             val homeViewModel = koinViewModel<HomeViewModel>()
 
+            val context = LocalContext.current
+
+            Toast.makeText(context , "${homeViewModel.categories}" , Toast.LENGTH_LONG).show()
+
             HomeScreen(
                 notes = homeViewModel.notes,
                 onClick = {noteId ->
