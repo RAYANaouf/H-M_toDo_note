@@ -1,7 +1,5 @@
-package com.jetapptech.halfwarenote.presentation.view.screen.analiticsScreen.components.chart
+package com.jetapptech.halfwarenote.presentation.view.screen.analiticsScreen.components.charts
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
