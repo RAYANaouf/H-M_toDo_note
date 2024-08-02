@@ -7,7 +7,5 @@ import androidx.room.PrimaryKey
 data class Category_Room (
     @PrimaryKey(autoGenerate = true)
     val id         : Int    = 0,
-    val note_id    : Long    = 0 ,
     val category   : String = "",
-    val index      : Int    = 0,
 )

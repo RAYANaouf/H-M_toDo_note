@@ -2,6 +2,7 @@ package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.componen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
@@ -22,12 +23,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.R
+import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.components.Section.Category
 
 @Composable
 fun categoriesFilterSection(
+    categories : List<Category_Room>,
+    selectedCategory : Int,
+    onCategoryClick : (Int)->Unit = {},
     modifier: Modifier = Modifier
 ) {
+
+
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -43,38 +50,33 @@ fun categoriesFilterSection(
                 .horizontalScroll(rememberScrollState())
         ) {
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(20.dp))
 
             Category(
-                category = "All"
+                category = "All",
+                selected = if(selectedCategory == 0) true else false ,
+                onclick = {
+                    onCategoryClick(0)
+                }
             )
 
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width( 12.dp ))
 
-            Category(
-                category = "My notes",
-            )
 
-            Spacer(modifier = Modifier.width(12.dp))
+            categories.forEachIndexed { index, categoryRoom ->
 
-            Category(
-                category = "Projects",
-            )
+                Category(
+                    category = categoryRoom.category,
+                    selected = if(selectedCategory == categoryRoom.id) true else false ,
+                    onclick = {
+                        onCategoryClick(categoryRoom.id)
+                    },
+                    modifier = Modifier
+                )
 
-            Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(if(index == categories.size-1) 20.dp else 12.dp))
 
-            Category(
-                category = "wen",
-            )
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            Category(
-                category = "Technology",
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
+            }
         }
 
         Box(

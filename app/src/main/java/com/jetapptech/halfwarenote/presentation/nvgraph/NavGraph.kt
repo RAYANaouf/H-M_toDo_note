@@ -48,7 +48,7 @@ fun NavGraph(
 
     NavHost(
         navController    = navHostController,
-        startDestination = analyticsScreen,
+        startDestination = addNoteScreen,
         modifier         = modifier
     ) {
 
@@ -94,13 +94,21 @@ fun NavGraph(
 
 
             val homeViewModel = koinViewModel<HomeViewModel>()
-
             val context = LocalContext.current
 
-            Toast.makeText(context , "${homeViewModel.categories}" , Toast.LENGTH_LONG).show()
+
+            LaunchedEffect(key1 = homeViewModel.selectedCategoryId ) {
+                homeViewModel.getNotes()
+            }
 
             HomeScreen(
                 notes = homeViewModel.notes,
+                categories = homeViewModel.categories,
+                onCategoryClick = {
+                    Toast.makeText(context , "$it" , Toast.LENGTH_LONG).show()
+                    homeViewModel.setCategory(it)
+                },
+                selectedCategoryId = homeViewModel.selectedCategoryId,
                 onClick = {noteId ->
                     navHostController
                         .navigate(
@@ -193,6 +201,7 @@ fun NavGraph(
 
             if (viewModel.scene == main){
                 AddNoteScreen(
+                    categories = viewModel.categories,
                     onEvent = {
                         viewModel.onEvent(
                             event  = it,

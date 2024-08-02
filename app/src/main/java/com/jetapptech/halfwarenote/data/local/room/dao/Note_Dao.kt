@@ -24,6 +24,10 @@ interface Note_Dao{
     suspend fun getNoteById(noteId : Int): NoteAndComponents
 
     @Transaction
+    @Query("select * from Note where category_id=:categoryId")
+    fun getNoteByCategory(categoryId : Int): Flow<List<NoteAndComponents>>
+
+    @Transaction
     @Query("select * from Note where title like '%' || :noteTitle || '%' ")
     fun getNotesByTitle(noteTitle : String): Flow<List<NoteAndComponents>>
 

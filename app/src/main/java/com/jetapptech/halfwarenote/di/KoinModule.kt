@@ -23,7 +23,7 @@ val koinModule = module{
             .databaseBuilder(
                 context = androidContext(),
                 klass   = Database::class.java,
-                name    = "myDatabaseV13"
+                name    = "myDatabaseV15"
             )
 //            .addTypeConverter(Converter_Room())
             .fallbackToDestructiveMigration()
@@ -60,16 +60,17 @@ val koinModule = module{
 
     viewModel {
         AddNoteViewModel(
-            noteDao = get<Note_Dao>(),
-            paragraphDao = get<Paragraph_Dao>(),
-            mediaDao = get<Media_Dao>(),
-            checkBoxDao = get<CheckBox_Dao>()
+            noteDao      = get(),
+            paragraphDao = get(),
+            mediaDao     = get(),
+            checkBoxDao  = get(),
+            categoryDao  = get()
         )
     }
 
     viewModel {
         HomeViewModel(
-            noteDao = get<Note_Dao>(),
+            noteDao     = get(),
             categoryDao = get()
         )
     }

@@ -1,6 +1,9 @@
 package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.homeViewModel
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,15 +29,24 @@ class HomeViewModel(
     var notes = mutableStateListOf<Note>()
         private set
     var categories = mutableStateListOf<Category_Room>()
+        private set
+    var selectedCategoryId by mutableStateOf(0)
+        private set
 
     init {
         getNotes()
         getCategories()
     }
 
+
+    fun setCategory( categoryId : Int){
+        selectedCategoryId = categoryId
+    }
+
+
     fun getNotes(){
 
-        var noteRelation : Flow<List<NoteAndComponents>> = noteDao.getNoteAndComponents()
+        var noteRelation : Flow<List<NoteAndComponents>> = if(selectedCategoryId == 0) noteDao.getNoteAndComponents() else noteDao.getNoteByCategory(selectedCategoryId)
 
         viewModelScope.launch {
 

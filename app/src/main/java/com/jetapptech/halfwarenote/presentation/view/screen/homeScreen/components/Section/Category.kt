@@ -27,12 +27,11 @@ import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white5
 @Composable
 fun Category(
     category : String,
+    selected : Boolean,
+    onclick  : ()->Unit = {},
     modifier: Modifier = Modifier
 ) {
 
-    var selected by remember {
-        mutableStateOf(false)
-    }
 
     Box(
         contentAlignment = Alignment.Center,
@@ -46,7 +45,7 @@ fun Category(
             )
             .height(40.dp)
             .clickable {
-                selected = !selected
+                onclick()
             }
             .padding(start = 6.dp, end = 6.dp)
     ){

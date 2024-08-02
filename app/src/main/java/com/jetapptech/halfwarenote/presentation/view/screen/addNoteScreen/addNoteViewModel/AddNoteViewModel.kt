@@ -11,10 +11,12 @@ import androidx.lifecycle.viewModelScope
 import com.jetapptech.halfwarenote.data.local.dataClasses.CheckBox
 import com.jetapptech.halfwarenote.data.local.dataClasses.Media
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
+import com.jetapptech.halfwarenote.data.local.room.dao.Category_Dao
 import com.jetapptech.halfwarenote.data.local.room.dao.CheckBox_Dao
 import com.jetapptech.halfwarenote.data.local.room.dao.Media_Dao
 import com.jetapptech.halfwarenote.data.local.room.dao.Note_Dao
 import com.jetapptech.halfwarenote.data.local.room.dao.Paragraph_Dao
+import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
 import com.jetapptech.halfwarenote.data.local.room.entities.CheckBox_Room
 import com.jetapptech.halfwarenote.data.local.room.entities.Media_Room
 import com.jetapptech.halfwarenote.data.local.room.entities.Paragraph_Room
@@ -27,6 +29,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,21 +39,34 @@ class AddNoteViewModel  constructor(
     private val noteDao      : Note_Dao,
     private val paragraphDao : Paragraph_Dao,
     private val mediaDao     : Media_Dao,
-    private val checkBoxDao  : CheckBox_Dao
+    private val checkBoxDao  : CheckBox_Dao,
+    private val categoryDao  : Category_Dao
     ) : ViewModel() {
 
 
 
     var scene : AddNoteScreen_Scene by mutableStateOf(main)
+        private set
+
+    var categories  = mutableStateListOf<Category_Room>()
+        private set
 
 
+    init {
 
+        viewModelScope.launch {
+            categoryDao.getCategories().collect{
+                categories.clear()
+                categories.addAll(it)
+            }
+        }
+
+    }
     fun onEvent(event : AddNoteEvents, onSave : ()-> Unit){
         when(event){
             is AddNoteEvents.saveNoten -> {
 
                 scene = saving
-
 
                 viewModelScope.launch {
 
@@ -91,6 +107,13 @@ class AddNoteViewModel  constructor(
 
                 }
 
+            }
+
+            is AddNoteEvents.createCategory -> {
+
+                viewModelScope.launch {
+                    categoryDao.insert(Category_Room( category = event.category))
+                }
 
             }
 
@@ -99,5 +122,8 @@ class AddNoteViewModel  constructor(
             }
         }
     }
+
+
+
 
 }

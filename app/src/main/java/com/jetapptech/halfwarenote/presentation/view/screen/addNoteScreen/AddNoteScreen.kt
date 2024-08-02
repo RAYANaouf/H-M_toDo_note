@@ -39,6 +39,7 @@ import com.jetapptech.halfwarenote.data.local.dataClasses.CheckBox
 import com.jetapptech.halfwarenote.data.local.dataClasses.Media
 import com.jetapptech.halfwarenote.data.local.dataClasses.NoteComponent
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
+import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
 import com.jetapptech.halfwarenote.data.local.room.entities.Note_Room
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white2
@@ -48,6 +49,7 @@ import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.compon
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.Paragraph
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.ToolBar
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.checkBox
+import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.dialogs.CategoryDialog
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.dialogs.ColorPickerDialog
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.dialogs.PasswordDialog
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.events.AddNoteEvents
@@ -61,8 +63,9 @@ import java.util.Date
 
 @Composable
 fun AddNoteScreen(
-    modifier: Modifier = Modifier,
-    onEvent  : (AddNoteEvents)->Unit = {}
+    modifier   : Modifier = Modifier,
+    categories : List<Category_Room>,
+    onEvent    : (AddNoteEvents)->Unit = {}
 ) {
 
 
@@ -97,6 +100,10 @@ fun AddNoteScreen(
     }
     var show_categoryDialog by remember {
         mutableStateOf(false)
+    }
+
+    var selectedCategoryId by remember {
+        mutableStateOf(0)
     }
 
     var index by remember {
@@ -147,6 +154,23 @@ fun AddNoteScreen(
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .background(custom_white0)
+    )
+
+    CategoryDialog(
+        show       = show_categoryDialog,
+        categories = categories,
+        onDismiss  = {
+            show_categoryDialog = false
+        },
+        onDone     = {
+            selectedCategoryId = it.id
+        },
+        onCreate = {
+            onEvent(AddNoteEvents.createCategory(it.category))
+        },
+        selectedCategory = selectedCategoryId,
+        modifier   = Modifier
+            .fillMaxWidth()
     )
 
 
@@ -322,7 +346,7 @@ fun AddNoteScreen(
 
                     }
                     "done"->{
-                        val note_room = Note_Room(title = noteTitle , color = noteColor.toArgb() , password = notePassword , hint = noteHint)
+                        val note_room = Note_Room(title = noteTitle , color = noteColor.toArgb() , category_id = selectedCategoryId , password = notePassword , hint = noteHint)
                         Toast.makeText(context , "${components.size}" , Toast.LENGTH_LONG).show()
                         onEvent(AddNoteEvents.saveNoten(note_room , components))
                     }

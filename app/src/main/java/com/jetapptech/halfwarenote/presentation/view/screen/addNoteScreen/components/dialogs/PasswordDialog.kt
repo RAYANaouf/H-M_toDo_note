@@ -123,12 +123,6 @@ fun PasswordDialog(
 
 
 
-                Box(modifier = Modifier.padding(start = 25.dp , end = 25.dp)){
-                    Text(
-                        text = "enter a hint to remember the password" ,
-                        style = TextStyles.Monospace_TextStyles.TextStyleSZ9
-                    )
-                }
 
                 OutlinedTextField(
                     value = hint,
@@ -152,14 +146,6 @@ fun PasswordDialog(
                 Spacer(modifier = Modifier.height(25.dp))
 
 
-                Box(modifier = Modifier.padding(start = 25.dp , end = 25.dp)){
-
-                    Text(
-                        text = "enter the password",
-                        style = TextStyles.Monospace_TextStyles.TextStyleSZ9
-                    )
-
-                }
                 OutlinedTextField(
                     value = password,
                     onValueChange = {

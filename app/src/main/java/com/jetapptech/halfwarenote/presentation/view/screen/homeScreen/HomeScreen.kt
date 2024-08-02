@@ -13,10 +13,13 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
+import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white1
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white3
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white4
@@ -27,9 +30,12 @@ import com.jetapptech.hw_todo_note.presentation.screens.homeScreen.components.No
 
 @Composable
 fun HomeScreen(
-    notes    : List<Note>,
-    onClick  : (Int)->Unit = {},
-    modifier : Modifier = Modifier
+    notes              : List<Note>,
+    categories         : List<Category_Room>,
+    selectedCategoryId : Int,
+    onCategoryClick    : (Int)->Unit = {},
+    onClick            : (Int)->Unit = {},
+    modifier           : Modifier = Modifier
 ) {
 
 
@@ -40,8 +46,12 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
+
         categoriesFilterSection(
-            modifier = Modifier
+            categories       = categories,
+            selectedCategory = selectedCategoryId,
+            onCategoryClick  = onCategoryClick,
+            modifier         = Modifier
         )
 
 
