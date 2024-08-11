@@ -155,4 +155,9 @@ dependencies {
     implementation(libs.koin.androidx.compose)
 
 
+
+
+    implementation(libs.elasticview)
+
+
 }

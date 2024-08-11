@@ -125,31 +125,6 @@ fun NavGraph(
         }
 
 
-        composable<searchScreen>{
-
-
-            SideEffect {
-                onShowBars(true , 4f ,true , 8f)
-                currentScreen(searchScreen)
-            }
-
-            set_system_bars_color(
-                statusBarColor     = custom_white0,
-                lightStatusBar     = true,
-                navigationBarColor = custom_white0,
-                lightNavigationBar = false
-            )
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-            ) {
-                Text(text = "search screen" )
-            }
-
-
-        }
-
 
         composable<noteScreen>{
 

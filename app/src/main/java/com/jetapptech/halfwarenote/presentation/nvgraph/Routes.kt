@@ -15,9 +15,6 @@ object onboardingScreen : AppScreen()
 object homeScreen : AppScreen()
 
 @Serializable
-object searchScreen : AppScreen()
-
-@Serializable
 object addNoteScreen : AppScreen()
 
 @Serializable
@@ -25,6 +22,9 @@ object lateScreen : AppScreen()
 
 @Serializable
 object analyticsScreen : AppScreen()
+
+@Serializable
+object parametersScreen : AppScreen()
 
 
 

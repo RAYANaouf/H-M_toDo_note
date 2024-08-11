@@ -54,6 +54,7 @@ import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.compon
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.dialogs.PasswordDialog
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.events.AddNoteEvents
 import com.jetapptech.sigmasea.util.objects.TextStyles
+import com.qamar.elasticview.ElasticView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
@@ -323,7 +324,6 @@ fun AddNoteScreen(
 
 
         }
-
 
 
 

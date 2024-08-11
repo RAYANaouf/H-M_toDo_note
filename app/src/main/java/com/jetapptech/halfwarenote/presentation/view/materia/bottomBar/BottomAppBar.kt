@@ -81,6 +81,7 @@ fun BottomAppBar(
                 )
             }
 
+
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
@@ -92,20 +93,47 @@ fun BottomAppBar(
                     .drawBehind {
                         drawLine(
                             color = if(selected == 1) p_color0 else Color.Transparent,
-                            strokeWidth = if(selected == 1) 5.dp.toPx() else 0.dp.toPx(),
+                            strokeWidth = if(selected == 1 ) 5.dp.toPx() else 0.dp.toPx(),
                             start = Offset(0f, 0f),
                             end = Offset(size.width, 0f)
                         )
                     }
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.search),
+                    painter = painterResource(id = R.drawable.late),
                     contentDescription = null,
                     contentScale = ContentScale.Inside,
                     modifier = Modifier
                         .size(25.dp)
                 )
             }
+
+
+//            Box(
+//                contentAlignment = Alignment.Center,
+//                modifier = Modifier
+//                    .fillMaxHeight()
+//                    .weight(1f)
+//                    .clickable {
+//                        onClick(1)
+//                    }
+//                    .drawBehind {
+//                        drawLine(
+//                            color = if(selected == 1) p_color0 else Color.Transparent,
+//                            strokeWidth = if(selected == 1) 5.dp.toPx() else 0.dp.toPx(),
+//                            start = Offset(0f, 0f),
+//                            end = Offset(size.width, 0f)
+//                        )
+//                    }
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.search),
+//                    contentDescription = null,
+//                    contentScale = ContentScale.Inside,
+//                    modifier = Modifier
+//                        .size(25.dp)
+//                )
+//            }
 
             Box(
                 contentAlignment = Alignment.Center,
@@ -124,13 +152,6 @@ fun BottomAppBar(
                         )
                     }
             ) {
-//                Image(
-//                    painter = painterResource(id = R.drawable),
-//                    contentDescription = null,
-//                    contentScale = ContentScale.Inside,
-//                    modifier = Modifier
-//                        .size(45.dp)
-//                )
                 LottieAnimation(
                     composition = lottie_composition,
                     progress = { progress },
@@ -138,6 +159,7 @@ fun BottomAppBar(
                         .size(45.dp)
                 )
             }
+
 
             Box(
                 contentAlignment = Alignment.Center,
@@ -150,20 +172,23 @@ fun BottomAppBar(
                     .drawBehind {
                         drawLine(
                             color = if(selected == 3) p_color0 else Color.Transparent,
-                            strokeWidth = if(selected == 3 ) 5.dp.toPx() else 0.dp.toPx(),
+                            strokeWidth = if(selected == 3) 5.dp.toPx() else 0.dp.toPx(),
                             start = Offset(0f, 0f),
                             end = Offset(size.width, 0f)
                         )
                     }
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.late),
+                    painter = painterResource(id = R.drawable.analitics),
                     contentDescription = null,
                     contentScale = ContentScale.Inside,
                     modifier = Modifier
                         .size(25.dp)
                 )
             }
+
+
+
 
             Box(
                 contentAlignment = Alignment.Center,
@@ -183,7 +208,7 @@ fun BottomAppBar(
                     }
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.analitics),
+                    painter = painterResource(id = R.drawable.setting),
                     contentDescription = null,
                     contentScale = ContentScale.Inside,
                     modifier = Modifier

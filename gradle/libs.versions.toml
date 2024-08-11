@@ -5,6 +5,7 @@ colorpickerCompose = "1.1.1"
 constraintlayoutCompose = "1.0.1"
 datastorePreferences = "1.1.1"
 coreSplashscreen = "1.0.1"
+elasticview = "v0.2"
 koin = "3.5.6"
 
 kotlin = "2.0.0"
@@ -32,7 +33,6 @@ serialization = "1.7.1"
 
 
 
-#######################  plugins
 
 ksp_version = "2.0.0-1.0.23"
 ycharts = "2.1.0"
@@ -56,6 +56,7 @@ androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "ro
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 colorpicker-compose = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpickerCompose" }
+elasticview = { module = "com.github.qamarelsafadi:ElasticView", version.ref = "elasticview" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

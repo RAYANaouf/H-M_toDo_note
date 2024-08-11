@@ -1,11 +1,13 @@
 package com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -22,6 +24,9 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.jetapptech.halfwarenote.R
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white2
+import com.qamar.elasticview.ElasticState
+import com.qamar.elasticview.ElasticView
+import com.qamar.elasticview.elasticEffect
 
 @Composable
 fun ToolBar(
@@ -184,23 +189,39 @@ fun ToolBar(
             }
         }
 
-        Box(
-            contentAlignment = Alignment.Center,
+
+
+        ElasticView(
             modifier = Modifier
-                .clip(CircleShape)
-                .background(custom_white2)
-                .layoutId("lock")
-                .clickable {
-                    onClick("lock")
+                .elasticEffect {
+                    
                 }
+                .layoutId("lock"),
+            onClick = {
+
+            }
         ) {
-            Image(
-                painter  = painterResource(id = R.drawable.cadenas),
-                contentDescription = null,
+            Box(
+                contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .size(30.dp)
-            )
+                    .fillMaxSize()
+                    .clip(CircleShape)
+                    .background(custom_white2)
+                    .clickable {
+                        onClick("lock")
+                    }
+            ) {
+
+                Image(
+                    painter  = painterResource(id = R.drawable.cadenas),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(30.dp)
+                )
+            }
+
         }
+
 
         Box(
             contentAlignment = Alignment.Center,

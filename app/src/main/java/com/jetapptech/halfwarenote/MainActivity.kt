@@ -43,15 +43,10 @@ import com.jetapptech.halfwarenote.presentation.nvgraph.analyticsScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.homeScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.lateScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.noteScreen
-import com.jetapptech.halfwarenote.presentation.nvgraph.onboardingScreen
-import com.jetapptech.halfwarenote.presentation.nvgraph.searchScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.parametersScreen
 import com.jetapptech.halfwarenote.presentation.ui.theme.HalfwareNoteTheme
-import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.ui.theme.p_color0
 import com.jetapptech.halfwarenote.presentation.view.materia.bottomBar.BottomAppBar
-import com.jetapptech.halfwarenote.presentation.view.materia.navigationDrawer.NavigationDrawer
-import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.HomeScreen
-import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
@@ -143,16 +138,16 @@ fun MainScreen(
                         homeScreen ->{
                             0
                         }
-                        searchScreen ->{
+                        lateScreen ->{
                             1
                         }
                         addNoteScreen ->{
                             2
                         }
-                        lateScreen ->{
+                        analyticsScreen ->{
                             3
                         }
-                        analyticsScreen ->{
+                        parametersScreen ->{
                             4
                         }
                         else -> {
@@ -168,9 +163,9 @@ fun MainScreen(
                             }
                         }
                         else if(it == 1){
-                            if (viewModel.current_screen == searchScreen)
+                            if (viewModel.current_screen == lateScreen)
                                 return@BottomAppBar
-                            navGraphState.navigate(searchScreen){
+                            navGraphState.navigate(lateScreen){
 
                             }
                         }
@@ -182,16 +177,16 @@ fun MainScreen(
                             }
                         }
                         else if(it == 3){
-                            if (viewModel.current_screen == lateScreen)
+                            if (viewModel.current_screen == analyticsScreen)
                                 return@BottomAppBar
-                            navGraphState.navigate(lateScreen){
+                            navGraphState.navigate(analyticsScreen){
 
                             }
                         }
                         else{
-                            if (viewModel.current_screen == analyticsScreen)
+                            if (viewModel.current_screen == parametersScreen)
                                 return@BottomAppBar
-                            navGraphState.navigate(analyticsScreen){
+                            navGraphState.navigate(parametersScreen){
 
                             }
                         }
