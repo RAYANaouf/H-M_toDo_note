@@ -55,7 +55,7 @@ fun NavGraph(
         composable<onboardingScreen>{
 
             SideEffect {
-                onShowBars(false , 0f ,false , 0f)
+//                onShowBars(false , 0f ,false , 0f)
                 currentScreen(onboardingScreen)
             }
 
@@ -81,7 +81,7 @@ fun NavGraph(
 
 
             SideEffect {
-                onShowBars(true , 4f ,true , 8f)
+//                onShowBars(true , 4f ,true , 8f)
                 currentScreen(homeScreen)
             }
 
@@ -131,7 +131,7 @@ fun NavGraph(
             val arg = it.toRoute<noteScreen>()
 
             SideEffect {
-                onShowBars(true , 4f ,false , 8f)
+//                onShowBars(true , 4f ,false , 8f)
                 currentScreen(noteScreen(noteId = arg.noteId))
             }
 
@@ -157,7 +157,7 @@ fun NavGraph(
 
         composable<addNoteScreen>{
             SideEffect{
-                onShowBars(true , 4f ,true , 8f)
+//                onShowBars(true , 4f ,true , 8f)
                 currentScreen(addNoteScreen)
             }
 
@@ -204,7 +204,7 @@ fun NavGraph(
         composable<lateScreen>{
 
             SideEffect {
-                onShowBars(true , 4f ,true , 8f)
+//                onShowBars(true , 4f ,true , 8f)
                 currentScreen(lateScreen)
             }
 
@@ -227,7 +227,7 @@ fun NavGraph(
 
         composable<analyticsScreen>{
             SideEffect {
-                onShowBars(true , 4f ,true , 8f)
+//                onShowBars(true , 4f ,true , 8f)
                 currentScreen(analyticsScreen)
             }
 
@@ -249,7 +249,7 @@ fun NavGraph(
 
         composable<aboutUsScreen>{
             SideEffect {
-                onShowBars(false , 0f ,false , 0f)
+//                onShowBars(false , 0f ,false , 0f)
                 currentScreen(aboutUsScreen)
             }
             set_system_bars_color(

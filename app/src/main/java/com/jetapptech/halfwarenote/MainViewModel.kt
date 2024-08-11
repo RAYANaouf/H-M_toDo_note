@@ -6,7 +6,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import com.jetapptech.halfwarenote.presentation.nvgraph.AppScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.aboutUsScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.addNoteScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.analyticsScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.homeScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.lateScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.noteScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.onboardingScreen
 
 class MainViewModel : ViewModel() {
 
@@ -22,6 +28,10 @@ class MainViewModel : ViewModel() {
     var current_screen : AppScreen by mutableStateOf(homeScreen)
 
 
+    //action
+
+
+
     fun setTopBar(show : Boolean, shadow : Float) {
         show_topbar = show
         topbar_shadow = shadow.dp
@@ -34,6 +44,40 @@ class MainViewModel : ViewModel() {
 
     fun setCurrentScreen( appScreen : AppScreen) {
         current_screen = appScreen
+        when(appScreen){
+            homeScreen->{
+                setTopBar(true , 5f)
+                setBottomBar(true , 8f)
+            }
+            is noteScreen->{
+                setTopBar(true , 5f)
+                setBottomBar(false , 0f)
+            }
+            addNoteScreen ->{
+                setTopBar(true , 5f)
+                setBottomBar(true , 8f)
+            }
+            lateScreen ->{
+                setTopBar(true , 5f)
+                setBottomBar(true , 8f)
+            }
+            analyticsScreen ->{
+                setTopBar(true , 5f)
+                setBottomBar(true , 8f)
+            }
+            aboutUsScreen->{
+                setTopBar(false , 0f)
+                setBottomBar(false , 0f)
+            }
+            onboardingScreen ->{
+                setTopBar(false , 0f)
+                setBottomBar(false , 0f)
+            }
+            else->{
+                setTopBar(false , 0f)
+                setBottomBar(false , 0f)
+            }
+        }
     }
 
 }
