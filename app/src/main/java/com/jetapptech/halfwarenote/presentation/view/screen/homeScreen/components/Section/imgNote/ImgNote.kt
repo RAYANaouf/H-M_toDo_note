@@ -5,10 +5,12 @@ import android.graphics.BitmapFactory
 import android.util.Base64
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +30,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -47,19 +50,43 @@ import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black1
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black3
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white1
+import com.jetapptech.halfwarenote.util.ShakingEffect.ShakingState
+import com.jetapptech.halfwarenote.util.ShakingEffect.rememberShackingState
+import com.jetapptech.halfwarenote.util.ShakingEffect.shakable
 import com.jetapptech.sigmasea.util.objects.TextStyles
+import kotlinx.coroutines.launch
 import java.io.File
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ImgNote(
-    note       : Note = Note(),
-    onClick    : (Int)->Unit = {},
-    background : Color         = Color(0xFFFFFFFF),
-    modifier   : Modifier = Modifier
+    note         : Note = Note(),
+    onClick      : (Int)->Unit = {},
+    onLongClick  : (Int)->Unit = {},
+    selectedNote : Int = -1,
+    background   : Color         = Color(0xFFFFFFFF),
+    modifier     : Modifier = Modifier
 ) {
 
 
-    val context = LocalContext.current
+    val shakingState = rememberShackingState(
+        strength = ShakingState.Strength.Custom(15f),
+    )
+    val coroutineScope = rememberCoroutineScope()
+
+
+    LaunchedEffect(key1 = selectedNote ) {
+        if (selectedNote != note.id) {
+            coroutineScope.launch {
+                shakingState.cancelShake()
+            }
+        }
+        else{
+            coroutineScope.launch {
+                shakingState.shake(Int.MAX_VALUE , 35)
+            }
+        }
+    }
 
     var img by rememberSaveable {
         mutableStateOf("")
@@ -84,10 +111,15 @@ fun ImgNote(
         ),
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
-            .clickable {
-                onClick(note.id)
-//                Toast.makeText(context , "node Id : ${note.id} \n ${note.components.size}"  , Toast.LENGTH_LONG).show()
-            }
+            .shakable(shakingState)
+            .combinedClickable(
+                onClick = {
+                    onClick(note.id)
+                },
+                onLongClick = {
+                    onLongClick(note.id)
+                }
+            )
     ) {
         Column(
             modifier = Modifier

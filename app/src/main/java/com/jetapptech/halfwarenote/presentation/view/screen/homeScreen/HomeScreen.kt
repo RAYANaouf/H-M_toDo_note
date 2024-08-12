@@ -1,6 +1,9 @@
 package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen
 
+import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,13 +14,21 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
@@ -43,7 +54,17 @@ fun HomeScreen(
     modifier           : Modifier = Modifier
 ) {
 
-    val coroutineScope = rememberCoroutineScope()
+
+    var selectedNote_LongPress by remember{
+        mutableIntStateOf(-1)
+    }
+
+//    val context = LocalContext.current
+//
+//    Toast.makeText(context , "${selectedNote_LongPress}" , Toast.LENGTH_LONG).show()
+
+
+
 
 
     Column(
@@ -79,26 +100,33 @@ fun HomeScreen(
                     it.id
                 }
             ){
+
+
                 if(it.type == 0){
-                    val shakingState = rememberShackingState(strength = ShakingState.Strength.Custom(20f))
                     NormalNote(
                         note = it,
+                        selectedNote = selectedNote_LongPress,
                         onClick = {noteId->
-//                            onClick(noteId)
-                            coroutineScope.launch {
-                                shakingState.shake(20)
-                            }
+                            onClick(noteId)
+                        },
+                        onLongClick = {noteid->
+                            selectedNote_LongPress = noteid
                         },
                         modifier = Modifier
-                            .shakable(shakingState)
                     )
                 }
                 else{
                     ImgNote(
                         note = it,
+                        selectedNote = selectedNote_LongPress,
                         onClick = {noteId->
                             onClick(noteId)
-                        }
+                        },
+                        onLongClick = {
+                            selectedNote_LongPress = it
+                        },
+                        modifier = Modifier
+
                     )
                 }
             }

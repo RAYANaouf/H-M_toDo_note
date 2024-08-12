@@ -14,20 +14,40 @@ class ShakingState(
     private val directions : Directions
 ) {
 
-    val xPosition= Animatable(0f)
+    val xPosition = Animatable(0f)
+    var animate   = false
 
-    suspend fun shake(animationDuration : Int = 50){
+    suspend fun shake(repeat : Int = 15 , animationDuration : Int = 50){
         val shakeAnimationSpec : AnimationSpec<Float> = tween(animationDuration)
+
+        if (animate){
+            cancelShake()
+            return
+        }
+
+        animate = true
         when(directions){
-            Directions.LEFT            -> shakeToLeft(shakeAnimationSpec)
-            Directions.RIGHT           -> shakeToRight(shakeAnimationSpec)
-            Directions.LEFT_THEN_RIGHT -> shakeToLeftThenRight(shakeAnimationSpec)
-            Directions.RIGHT_THEN_LEFT -> shakeToRightTHenLeft(shakeAnimationSpec)
+            Directions.LEFT            -> shakeToLeft(repeat , shakeAnimationSpec)
+            Directions.RIGHT           -> shakeToRight(repeat , shakeAnimationSpec)
+            Directions.LEFT_THEN_RIGHT -> shakeToLeftThenRight(repeat , shakeAnimationSpec)
+            Directions.RIGHT_THEN_LEFT -> shakeToRightTHenLeft(repeat , shakeAnimationSpec)
         }
     }
 
-    private suspend fun shakeToLeftThenRight(shakeAnimationSpec: AnimationSpec<Float>) {
-        repeat(3){
+    suspend fun cancelShake() {
+        val shakeAnimationSpec : AnimationSpec<Float> = tween(5)
+        xPosition.animateTo(0f , shakeAnimationSpec)
+        animate = false
+
+
+    }
+
+    private suspend fun shakeToLeftThenRight(repeat : Int = 15 , shakeAnimationSpec: AnimationSpec<Float>) {
+        repeat(repeat){
+            if(!animate){
+                animate = true
+                return@repeat
+            }
             xPosition.animateTo(-strength.value , shakeAnimationSpec)
             xPosition.animateTo(0f , shakeAnimationSpec)
             xPosition.animateTo(strength.value , shakeAnimationSpec)
@@ -35,8 +55,12 @@ class ShakingState(
         }
     }
 
-    private suspend fun shakeToRightTHenLeft(shakeAnimationSpec: AnimationSpec<Float>) {
-        repeat(3){
+    private suspend fun shakeToRightTHenLeft(repeat : Int = 15 ,shakeAnimationSpec: AnimationSpec<Float>) {
+        repeat(repeat){
+            if(!animate){
+                animate = true
+                return@repeat
+            }
             xPosition.animateTo(strength.value , shakeAnimationSpec)
             xPosition.animateTo(0f , shakeAnimationSpec)
             xPosition.animateTo(-strength.value , shakeAnimationSpec)
@@ -44,15 +68,23 @@ class ShakingState(
         }
     }
 
-    private suspend fun shakeToRight(shakeAnimationSpec: AnimationSpec<Float>) {
-        repeat(3){
+    private suspend fun shakeToRight(repeat : Int = 15 ,shakeAnimationSpec: AnimationSpec<Float>) {
+        repeat(repeat){
+            if(!animate){
+                animate = true
+                return@repeat
+            }
             xPosition.animateTo(strength.value , shakeAnimationSpec)
             xPosition.animateTo(0f , shakeAnimationSpec)
         }
     }
 
-    private suspend fun shakeToLeft(shakeAnimationSpec: AnimationSpec<Float>) {
-        repeat(3){
+    private suspend fun shakeToLeft(repeat : Int = 15 ,shakeAnimationSpec: AnimationSpec<Float>) {
+        repeat(repeat){
+            if(!animate){
+                animate = true
+                return@repeat
+            }
             xPosition.animateTo(-strength.value , shakeAnimationSpec)
             xPosition.animateTo(0f , shakeAnimationSpec)
         }

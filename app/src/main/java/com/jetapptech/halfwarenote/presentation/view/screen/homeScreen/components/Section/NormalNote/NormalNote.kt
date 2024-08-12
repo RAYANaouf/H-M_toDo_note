@@ -2,8 +2,10 @@ package com.jetapptech.hw_todo_note.presentation.screens.homeScreen.components.N
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,6 +21,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,18 +34,42 @@ import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black1
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black3
+import com.jetapptech.halfwarenote.util.ShakingEffect.ShakingState
+import com.jetapptech.halfwarenote.util.ShakingEffect.rememberShackingState
+import com.jetapptech.halfwarenote.util.ShakingEffect.shakable
 import com.jetapptech.sigmasea.util.objects.TextStyles
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NormalNote(
-    note     : Note = Note(),
-    onClick  : (Int)->Unit = {},
-    background : Color         = Color(0xFFFFFFFF),
-    padding    : PaddingValues = PaddingValues(start = 12.dp , top = 10.dp , bottom = 10.dp , end = 12.dp),
-    modifier : Modifier        = Modifier
+    note         : Note = Note(),
+    onClick      : (Int)->Unit = {},
+    onLongClick  : (Int)->Unit = {},
+    selectedNote : Int = -1,
+    background   : Color         = Color(0xFFFFFFFF),
+    padding      : PaddingValues = PaddingValues(start = 12.dp , top = 10.dp , bottom = 10.dp , end = 12.dp),
+    modifier     : Modifier        = Modifier
 ) {
 
+    val shakingState = rememberShackingState(
+        strength = ShakingState.Strength.Custom(15f),
+    )
+    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+
+    LaunchedEffect(key1 = selectedNote ) {
+        if (selectedNote != note.id) {
+            coroutineScope.launch {
+                shakingState.cancelShake()
+            }
+        }
+        else{
+            coroutineScope.launch {
+                shakingState.shake(Int.MAX_VALUE , 35)
+            }
+        }
+    }
 
     Surface(
         shadowElevation = 2.dp,
@@ -53,10 +81,15 @@ fun NormalNote(
         ),
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
-            .clickable {
-                onClick(note.id)
-//                Toast.makeText(context , "note id : ${note.id} \n ${note.components.size}" , Toast.LENGTH_LONG).show()
-            }
+            .shakable(shakingState)
+            .combinedClickable(
+                onClick = {
+                    onClick(note.id)
+                },
+                onLongClick = {
+                    onLongClick(note.id)
+                }
+            )
     ) {
         Column(
             modifier = Modifier
@@ -86,8 +119,9 @@ fun NormalNote(
                         .width((16+4+4).dp)
                 ) {
                     Spacer(
-                        modifier = Modifier.size(16.dp)
-                            .border(width = 2.dp , color = note.color , shape = CircleShape)
+                        modifier = Modifier
+                            .size(16.dp)
+                            .border(width = 2.dp, color = note.color, shape = CircleShape)
                     )
                 }
             }
