@@ -13,6 +13,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -30,14 +34,18 @@ import com.jetapptech.sigmasea.util.objects.TextStyles
 @Composable
 fun NoteScreen(
     note     : Note?,
+    editable : Boolean = false,
     modifier : Modifier = Modifier
 ) {
 
 
+    var noteTitle by remember {
+        mutableStateOf(note?.title ?: "")
+    }
+
     Box(
         modifier = modifier
     ) {
-
 
         LazyColumn(
             modifier = Modifier
@@ -68,12 +76,12 @@ fun NoteScreen(
                                 .padding(start = 30.dp)
                         ) {
                             NoteTitle(
-                                noteTitle = note?.title ?: "Loading",
-                                onChange = {
-//                                    noteTitle = it
+                                noteTitle = noteTitle,
+                                onChange  = {
+                                    noteTitle = it
                                 },
-                                enable   = false,
-                                modifier = Modifier
+                                enable    = editable,
+                                modifier  = Modifier
                                     .fillMaxWidth()
                             )
                         }
@@ -139,6 +147,7 @@ fun NoteScreen(
                 Spacer(modifier = Modifier.height(100.dp))
             }
         }
+
     }
 
 }

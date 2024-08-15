@@ -32,11 +32,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
+import com.jetapptech.halfwarenote.presentation.nvgraph.AppScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.noteScreen
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white1
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white3
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white4
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.components.Section.categoryFilterSection.categoriesFilterSection
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.components.Section.imgNote.ImgNote
+import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.events.HomeScreenEvents
 import com.jetapptech.halfwarenote.util.ShakingEffect.ShakingState
 import com.jetapptech.halfwarenote.util.ShakingEffect.rememberShackingState
 import com.jetapptech.halfwarenote.util.ShakingEffect.shakable
@@ -47,10 +50,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     notes              : List<Note>,
+    onEvent            : (HomeScreenEvents)-> Unit = {},
     categories         : List<Category_Room>,
     selectedCategoryId : Int,
-    onCategoryClick    : (Int)->Unit = {},
-    onClick            : (Int)->Unit = {},
+    onClick            : (AppScreen)->Unit = {screen -> },
     modifier           : Modifier = Modifier
 ) {
 
@@ -58,13 +61,6 @@ fun HomeScreen(
     var selectedNote_LongPress by remember{
         mutableIntStateOf(-1)
     }
-
-//    val context = LocalContext.current
-//
-//    Toast.makeText(context , "${selectedNote_LongPress}" , Toast.LENGTH_LONG).show()
-
-
-
 
 
     Column(
@@ -78,7 +74,9 @@ fun HomeScreen(
         categoriesFilterSection(
             categories       = categories,
             selectedCategory = selectedCategoryId,
-            onCategoryClick  = onCategoryClick,
+            onCategoryClick  = {categoryId->
+                onEvent(HomeScreenEvents.setCategory(categoryId))
+            },
             modifier         = Modifier
         )
 
@@ -86,10 +84,10 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(25.dp))
 
         LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(2),
+            columns               = StaggeredGridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalItemSpacing = 12.dp,
-            modifier = Modifier
+            verticalItemSpacing   = 12.dp,
+            modifier              = Modifier
                 .padding(start = 12.dp, end = 12.dp)
                 .height(1000.dp)
         ) {
@@ -101,34 +99,38 @@ fun HomeScreen(
                 }
             ){
 
-
                 if(it.type == 0){
                     NormalNote(
                         note = it,
-                        selectedNote = selectedNote_LongPress,
-                        onClick = {noteId->
-                            onClick(noteId)
+                        onClick = {screen->
+                            onClick(screen)
                         },
                         onLongClick = {noteid->
                             selectedNote_LongPress = noteid
                         },
+                        onDelete    = {noteId->
+                            onEvent(HomeScreenEvents.DeleteNote(noteId = noteId))
+                        },
                         modifier = Modifier
                     )
                 }
+
                 else{
                     ImgNote(
                         note = it,
-                        selectedNote = selectedNote_LongPress,
-                        onClick = {noteId->
-                            onClick(noteId)
+                        onClick = {screen->
+                            onClick(screen)
                         },
                         onLongClick = {
                             selectedNote_LongPress = it
                         },
+                        onDelete    = {noteId->
+                            onEvent(HomeScreenEvents.DeleteNote(noteId = noteId))
+                        },
                         modifier = Modifier
-
                     )
                 }
+
             }
 
 

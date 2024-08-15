@@ -3,6 +3,7 @@ package com.jetapptech.hw_todo_note.presentation.screens.homeScreen.components.N
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -18,11 +19,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,8 +39,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
+import com.jetapptech.halfwarenote.presentation.nvgraph.AppScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.noteScreen
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black1
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black3
+import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white1
+import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white5
 import com.jetapptech.halfwarenote.util.ShakingEffect.ShakingState
 import com.jetapptech.halfwarenote.util.ShakingEffect.rememberShackingState
 import com.jetapptech.halfwarenote.util.ShakingEffect.shakable
@@ -44,32 +55,31 @@ import kotlinx.coroutines.launch
 @Composable
 fun NormalNote(
     note         : Note = Note(),
-    onClick      : (Int)->Unit = {},
+    onClick      : (AppScreen)->Unit = {},
     onLongClick  : (Int)->Unit = {},
-    selectedNote : Int = -1,
+    onDelete     : (Int)->Unit = {},
     background   : Color         = Color(0xFFFFFFFF),
     padding      : PaddingValues = PaddingValues(start = 12.dp , top = 10.dp , bottom = 10.dp , end = 12.dp),
     modifier     : Modifier        = Modifier
 ) {
 
+
+    /**************  vars  ***************/
+    //effect var
     val shakingState = rememberShackingState(
         strength = ShakingState.Strength.Custom(15f),
     )
-    val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
 
-    LaunchedEffect(key1 = selectedNote ) {
-        if (selectedNote != note.id) {
-            coroutineScope.launch {
-                shakingState.cancelShake()
-            }
-        }
-        else{
-            coroutineScope.launch {
-                shakingState.shake(Int.MAX_VALUE , 35)
-            }
-        }
+    //compose var
+    val coroutineScope = rememberCoroutineScope()
+
+    //logic var
+    var expanded by remember{
+        mutableStateOf(false)
     }
+
+
+    /***************************     user interface      ***************************/
 
     Surface(
         shadowElevation = 2.dp,
@@ -84,9 +94,10 @@ fun NormalNote(
             .shakable(shakingState)
             .combinedClickable(
                 onClick = {
-                    onClick(note.id)
+                    onClick(noteScreen( editable = false , noteId = note.id))
                 },
                 onLongClick = {
+                    expanded = true
                     onLongClick(note.id)
                 }
             )
@@ -160,6 +171,48 @@ fun NormalNote(
 
 
         }
+
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                expanded = false
+            },
+            modifier = Modifier
+                .background(
+                    color = custom_white1
+                )
+        ) {
+
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text     = "Edit",
+                        style    = TextStyles.inter_TextStyles.TextStyleSZ6.copy(color = custom_white5),
+                        modifier = Modifier
+                    )
+                },
+                onClick = {
+                    expanded = false
+                    onClick(noteScreen( editable = true , noteId = note.id))
+                }
+            )
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text     = "Delete",
+                        style    = TextStyles.inter_TextStyles.TextStyleSZ6.copy(color = Color.Red),
+                        modifier = Modifier
+                    )
+                },
+                onClick = {
+                    expanded = false
+                    onDelete(note.id)
+                }
+            )
+
+        }
+
     }
 
 }

@@ -48,14 +48,13 @@ fun NavGraph(
 
     NavHost(
         navController    = navHostController,
-        startDestination = addNoteScreen,
+        startDestination = homeScreen,
         modifier         = modifier
     ) {
 
         composable<onboardingScreen>{
 
             SideEffect {
-//                onShowBars(false , 0f ,false , 0f)
                 currentScreen(onboardingScreen)
             }
 
@@ -78,13 +77,9 @@ fun NavGraph(
         }
 
         composable<homeScreen>{
-
-
             SideEffect {
-//                onShowBars(true , 4f ,true , 8f)
                 currentScreen(homeScreen)
             }
-
             set_system_bars_color(
                 statusBarColor     = custom_white0,
                 lightStatusBar     = true,
@@ -94,8 +89,6 @@ fun NavGraph(
 
 
             val homeViewModel = koinViewModel<HomeViewModel>()
-            val context = LocalContext.current
-
 
             LaunchedEffect(key1 = homeViewModel.selectedCategoryId ) {
                 homeViewModel.getNotes()
@@ -104,17 +97,12 @@ fun NavGraph(
             HomeScreen(
                 notes = homeViewModel.notes,
                 categories = homeViewModel.categories,
-                onCategoryClick = {
-                    Toast.makeText(context , "$it" , Toast.LENGTH_LONG).show()
-                    homeViewModel.setCategory(it)
-                },
+                onEvent = homeViewModel::onEvent,
                 selectedCategoryId = homeViewModel.selectedCategoryId,
-                onClick = {noteId ->
+                onClick = {screen  ->
                     navHostController
                         .navigate(
-                            noteScreen(
-                                noteId = noteId
-                            )
+                            screen
                         )
                 },
                 modifier = Modifier
@@ -128,11 +116,11 @@ fun NavGraph(
 
         composable<noteScreen>{
 
-            val arg = it.toRoute<noteScreen>()
+            val args = it.toRoute<noteScreen>()
 
             SideEffect {
 //                onShowBars(true , 4f ,false , 8f)
-                currentScreen(noteScreen(noteId = arg.noteId))
+                currentScreen(noteScreen(noteId = args.noteId))
             }
 
             set_system_bars_color(
@@ -145,10 +133,11 @@ fun NavGraph(
 
             val noteViewModel = koinViewModel<NoteViewModel>()
 
-            noteViewModel.getNoteById( noteId = arg.noteId )
+            noteViewModel.getNoteById( noteId = args.noteId )
 
             NoteScreen(
-                note = noteViewModel.note
+                note = noteViewModel.note,
+                editable = args.editable
             )
 
 
@@ -181,11 +170,11 @@ fun NavGraph(
                         viewModel.onEvent(
                             event  = it,
                             onSave = {
-//                                navHostController.navigate(homeScreen){
-//                                    popUpTo(homeScreen){
-//                                        inclusive = true
-//                                    }
-//                                }
+                                navHostController.navigate(homeScreen){
+                                    popUpTo(homeScreen){
+                                        inclusive = true
+                                    }
+                                }
                             }
                         )
                     },

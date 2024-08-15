@@ -15,9 +15,13 @@ import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
 import com.jetapptech.halfwarenote.data.local.room.dao.Category_Dao
 import com.jetapptech.halfwarenote.data.local.room.dao.Note_Dao
 import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
+import com.jetapptech.halfwarenote.data.local.room.entities.Note_Room
 import com.jetapptech.halfwarenote.data.local.room.relations.NoteAndComponents
+import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.events.HomeScreenEvents
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Date
 
 class HomeViewModel(
@@ -39,8 +43,38 @@ class HomeViewModel(
     }
 
 
-    fun setCategory( categoryId : Int){
+    fun onEvent(even : HomeScreenEvents){
+        when(even){
+            is HomeScreenEvents.setCategory->{
+                setCategory(even.categoryId)
+            }
+            is HomeScreenEvents.DeleteNote->{
+                deleteNote(
+                    noteId = even.noteId ,
+                    onSuccess = {
+                        even.onSuccess()
+                    }
+                )
+            }
+            else->{
+
+            }
+        }
+    }
+
+
+
+    private fun setCategory( categoryId : Int){
         selectedCategoryId = categoryId
+    }
+
+    private fun deleteNote(noteId : Int , onSuccess : ()->Unit){
+        viewModelScope.launch {
+            noteDao.delete(Note_Room(id = noteId ))
+            withContext(Dispatchers.Main){
+                onSuccess()
+            }
+        }
     }
 
 
@@ -58,6 +92,8 @@ class HomeViewModel(
 
 
                 noteList = it.map{
+
+                    type = 0
 
                     var noteComponent = ArrayList<NoteComponent>()
 
@@ -94,6 +130,7 @@ class HomeViewModel(
                                     index = it.index
                                 )
                             )
+
                     }
 
 
@@ -123,6 +160,7 @@ class HomeViewModel(
         }
 
     }
+
 
     fun getCategories(){
         viewModelScope.launch {

@@ -29,7 +29,7 @@ object parametersScreen : AppScreen()
 
 
 @Serializable
-class noteScreen(val noteId : Int = 1 ) : AppScreen()
+class noteScreen( val editable : Boolean = false , val noteId : Int = 1 ) : AppScreen()
 
 
 @Serializable

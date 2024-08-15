@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,9 +49,13 @@ import coil.compose.AsyncImage
 import com.jetapptech.halfwarenote.data.local.dataClasses.Media
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
+import com.jetapptech.halfwarenote.presentation.nvgraph.AppScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.noteScreen
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black1
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black3
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white1
+import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white4
+import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white5
 import com.jetapptech.halfwarenote.util.ShakingEffect.ShakingState
 import com.jetapptech.halfwarenote.util.ShakingEffect.rememberShackingState
 import com.jetapptech.halfwarenote.util.ShakingEffect.shakable
@@ -60,12 +66,12 @@ import java.io.File
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ImgNote(
-    note         : Note = Note(),
-    onClick      : (Int)->Unit = {},
+    note         : Note        = Note(),
+    onClick      : (AppScreen)->Unit = {},
     onLongClick  : (Int)->Unit = {},
-    selectedNote : Int = -1,
-    background   : Color         = Color(0xFFFFFFFF),
-    modifier     : Modifier = Modifier
+    onDelete     : (Int)->Unit = {},
+    background   : Color       = Color(0xFFFFFFFF),
+    modifier     : Modifier    = Modifier
 ) {
 
 
@@ -74,19 +80,24 @@ fun ImgNote(
     )
     val coroutineScope = rememberCoroutineScope()
 
-
-    LaunchedEffect(key1 = selectedNote ) {
-        if (selectedNote != note.id) {
-            coroutineScope.launch {
-                shakingState.cancelShake()
-            }
-        }
-        else{
-            coroutineScope.launch {
-                shakingState.shake(Int.MAX_VALUE , 35)
-            }
-        }
+    //logic var
+    var expanded by remember{
+        mutableStateOf(false)
     }
+
+
+//    LaunchedEffect(key1 = selectedNote ) {
+//        if (selectedNote != note.id) {
+//            coroutineScope.launch {
+//                shakingState.cancelShake()
+//            }
+//        }
+//        else{
+//            coroutineScope.launch {
+//                shakingState.shake(Int.MAX_VALUE , 35)
+//            }
+//        }
+//    }
 
     var img by rememberSaveable {
         mutableStateOf("")
@@ -114,10 +125,11 @@ fun ImgNote(
             .shakable(shakingState)
             .combinedClickable(
                 onClick = {
-                    onClick(note.id)
+                    onClick(noteScreen( editable = false , noteId = note.id))
                 },
                 onLongClick = {
                     onLongClick(note.id)
+                    expanded = true
                 }
             )
     ) {
@@ -204,6 +216,47 @@ fun ImgNote(
             }
 
             Spacer(modifier = Modifier.height(14.dp))
+
+        }
+
+
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                expanded = false
+            },
+            modifier = Modifier
+                .background(
+                    color = custom_white1
+                )
+        ) {
+
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text     = "Edit",
+                        style    = TextStyles.inter_TextStyles.TextStyleSZ6.copy(color = custom_white5),
+                        modifier = Modifier
+                    )
+                },
+                onClick = {
+                    expanded = false
+                }
+            )
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text     = "Delete",
+                        style    = TextStyles.inter_TextStyles.TextStyleSZ6.copy(color = Color.Red),
+                        modifier = Modifier
+                    )
+                },
+                onClick = {
+                    expanded = false
+                    onDelete(note.id)
+                }
+            )
 
         }
     }

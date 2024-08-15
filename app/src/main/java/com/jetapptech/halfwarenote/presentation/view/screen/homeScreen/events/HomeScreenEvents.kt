@@ -1,4 +1,8 @@
 package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.events
 
-class HomeScreenEvents {
+sealed class HomeScreenEvents {
+
+    class setCategory(val categoryId : Int) : HomeScreenEvents()
+
+    class DeleteNote (val noteId : Int ,val onSuccess : ()->Unit = {}) : HomeScreenEvents()
 }
