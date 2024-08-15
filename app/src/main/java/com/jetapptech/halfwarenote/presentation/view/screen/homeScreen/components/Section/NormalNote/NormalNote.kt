@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
 import com.jetapptech.halfwarenote.presentation.nvgraph.AppScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.addNoteScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.noteScreen
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black1
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black3
@@ -194,7 +195,13 @@ fun NormalNote(
                 },
                 onClick = {
                     expanded = false
-                    onClick(noteScreen( editable = true , noteId = note.id))
+                    onClick(
+//                        com.jetapptech.halfwarenote.presentation.nvgraph.addNoteScreen(
+//                            editable = true,
+//                            noteId = note.id
+//                        )
+                        addNoteScreen
+                    )
                 }
             )
             DropdownMenuItem(

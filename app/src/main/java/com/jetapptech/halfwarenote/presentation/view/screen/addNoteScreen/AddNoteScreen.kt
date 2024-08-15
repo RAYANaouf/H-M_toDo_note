@@ -37,6 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.data.local.dataClasses.CheckBox
 import com.jetapptech.halfwarenote.data.local.dataClasses.Media
+import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.data.local.dataClasses.NoteComponent
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
 import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
@@ -65,6 +66,8 @@ import java.util.Date
 @Composable
 fun AddNoteScreen(
     modifier   : Modifier = Modifier,
+    editable   : Boolean  = false,
+    note       : Note = Note(),
     categories : List<Category_Room>,
     onEvent    : (AddNoteEvents)->Unit = {}
 ) {
@@ -77,19 +80,19 @@ fun AddNoteScreen(
         mutableStateListOf<NoteComponent>(Paragraph(index = 0))
     }
     var noteTitle  by remember {
-        mutableStateOf("")
+        mutableStateOf(note.title)
     }
 
     var noteColor by remember {
-        mutableStateOf(Color.White)
+        mutableStateOf(note.color)
     }
 
     var notePassword by remember {
-        mutableStateOf("")
+        mutableStateOf(note.password)
     }
 
     var noteHint by remember {
-        mutableStateOf("")
+        mutableStateOf(note.hint)
     }
 
     var show_colorPicker by remember {

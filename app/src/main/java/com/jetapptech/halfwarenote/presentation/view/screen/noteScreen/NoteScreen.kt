@@ -1,5 +1,6 @@
 package com.jetapptech.hw_todo_note.presentation.screens.noteScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,17 +14,24 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.jetapptech.halfwarenote.data.local.dataClasses.CheckBox
 import com.jetapptech.halfwarenote.data.local.dataClasses.Media
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
+import com.jetapptech.halfwarenote.data.local.dataClasses.NoteComponent
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
+import com.jetapptech.halfwarenote.data.local.room.entities.Paragraph_Room
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white2
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.NoteMedia
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.NoteTitle
@@ -39,9 +47,35 @@ fun NoteScreen(
 ) {
 
 
-    var noteTitle by remember {
+    //***************** vars *********************//
+
+    var context = LocalContext.current
+
+
+    var components  = remember {
+        mutableStateListOf<NoteComponent>()
+    }
+
+    var noteTitle  by remember {
         mutableStateOf(note?.title ?: "")
     }
+
+    var noteColor by remember {
+        mutableStateOf(Color.White)
+    }
+
+    //********************* effects **************************//
+
+    LaunchedEffect(key1 = note?.components) {
+//        Toast.makeText(context , "it change" , Toast.LENGTH_LONG).show()
+        if(note?.components != null){
+            components.clear()
+            components.addAll(note.components)
+        }
+    }
+
+
+
 
     Box(
         modifier = modifier
@@ -92,20 +126,21 @@ fun NoteScreen(
                 }
             }
 
-            if (note?.components != null){
+            if (components != null){
                 itemsIndexed(
-                    items = note.components
+                    items = components
                 ){ index, item_component ->
                     Spacer(modifier = Modifier.height(20.dp))
 
                     if (item_component is Paragraph){
                         Paragraph(
                             txt = item_component.txt,
-                            onChange = {
-                                //nothing
+                            onChange = { new_txt->
+                                components.removeAt(index)
+                                components.add(index , Paragraph(id = item_component.id , txt = new_txt , index = item_component.index) )
                             },
                             hint =  "paragraph ${item_component.index}",
-                            enable = false,
+                            enable = editable,
                             modifier = Modifier
                                 .padding(start = 30.dp , end = 25.dp)
                         )
@@ -113,15 +148,17 @@ fun NoteScreen(
                     else if(item_component is CheckBox){
                         checkBox(
                             txt = item_component.txt,
-                            onChange = {
-                                       //nothing
+                            onChange = {new_txt->
+                                components.removeAt(index)
+                                components.add(index , CheckBox(id = item_component.id , checked = item_component.checked ,txt = new_txt , index = item_component.index) )
                             },
                             hint =  "ToDo $index",
                             checked = item_component.checked,
                             oncheck = {
-                                      //nothing
+                                components.removeAt(index)
+                                components.add(index , CheckBox(id = item_component.id , checked = !item_component.checked , txt = item_component.txt , index = item_component.index) )
                             },
-                            enable = false,
+                            enable = editable,
                             modifier = Modifier
                                 .padding(start = 30.dp , end = 25.dp)
                         )

@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_black3
 import com.jetapptech.sigmasea.util.objects.TextStyles
@@ -16,6 +20,7 @@ fun Paragraph(
     hint     : String ,
     modifier : Modifier = Modifier
 ) {
+
 
 
     Box(
