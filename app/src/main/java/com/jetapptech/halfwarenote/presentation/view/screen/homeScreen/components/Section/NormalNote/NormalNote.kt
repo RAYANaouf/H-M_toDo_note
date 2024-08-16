@@ -200,7 +200,7 @@ fun NormalNote(
 //                            editable = true,
 //                            noteId = note.id
 //                        )
-                        addNoteScreen
+                        addNoteScreen("")
                     )
                 }
             )

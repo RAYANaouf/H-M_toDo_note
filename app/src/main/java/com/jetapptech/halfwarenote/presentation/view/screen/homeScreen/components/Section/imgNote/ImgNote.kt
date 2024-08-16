@@ -243,7 +243,7 @@ fun ImgNote(
                 },
                 onClick = {
                     expanded = false
-                    onClick(addNoteScreen)
+                    onClick(addNoteScreen(""))
                 }
             )
             DropdownMenuItem(

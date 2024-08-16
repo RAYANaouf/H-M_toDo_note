@@ -3,6 +3,7 @@ package com.jetapptech.halfwarenote.data.local.dataClasses
 import androidx.compose.ui.graphics.Color
 import java.util.Date
 
+
 data class Note(
     val id         : Int     = 0,
     val title      : String  = "noteTitle",

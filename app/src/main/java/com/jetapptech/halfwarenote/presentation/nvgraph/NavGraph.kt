@@ -145,9 +145,10 @@ fun NavGraph(
 
 
         composable<addNoteScreen>{
+
             SideEffect{
 //                onShowBars(true , 4f ,true , 8f)
-                currentScreen(addNoteScreen)
+                currentScreen(addNoteScreen(""))
             }
 
             set_system_bars_color(

@@ -1,5 +1,6 @@
 package com.jetapptech.halfwarenote.presentation.nvgraph
 
+import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import kotlinx.serialization.Serializable
 
 
@@ -15,7 +16,7 @@ object onboardingScreen : AppScreen()
 object homeScreen : AppScreen()
 
 @Serializable
-object addNoteScreen : AppScreen()
+class addNoteScreen(val noteId : String) : AppScreen()
 
 @Serializable
 object lateScreen : AppScreen()
