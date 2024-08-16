@@ -361,9 +361,17 @@ fun AddNoteScreen(
 
                     }
                     "done"->{
-                        val note_room = Note_Room(title = noteTitle , color = noteColor , category_id = selectedCategoryId , password = notePassword , hint = noteHint)
-                        Toast.makeText(context , "${components.size}" , Toast.LENGTH_LONG).show()
-                        onEvent(AddNoteEvents.saveNoten(note_room , components))
+                        val note_room : Note_Room
+                        if (note == null){
+                            note_room = Note_Room(title = noteTitle , color = noteColor , category_id = selectedCategoryId , password = notePassword , hint = noteHint)
+                            onEvent(AddNoteEvents.saveNote(note_room , components))
+                        }
+                        else{
+//                            Toast.makeText(context , "${note.note.id}" , Toast.LENGTH_LONG).show()
+                            note_room = Note_Room( id = note.note.id, title = noteTitle , color = noteColor , category_id = selectedCategoryId , password = notePassword , hint = noteHint)
+                            onEvent(AddNoteEvents.editNote(note_room , components))
+                        }
+
                     }
                     "lock"->{
                         show_passwordDialog = true

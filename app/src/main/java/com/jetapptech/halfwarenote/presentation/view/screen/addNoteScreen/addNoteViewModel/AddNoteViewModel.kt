@@ -71,7 +71,7 @@ class AddNoteViewModel  constructor(
 
     fun onEvent(event : AddNoteEvents, onSave : ()-> Unit){
         when(event){
-            is AddNoteEvents.saveNoten -> {
+            is AddNoteEvents.saveNote -> {
 
                 scene = saving
 
@@ -96,6 +96,51 @@ class AddNoteViewModel  constructor(
                                 }
                                 is Media -> {
                                     mediaDao.insert(Media_Room(img = it.img  , note_id = noteId , index = it.index))
+                                }
+                            }
+                        }
+                    }
+
+
+
+                    childJob.join()
+
+                    withContext(Dispatchers.Main){
+                        onSave()
+                    }
+
+
+
+
+                }
+
+            }
+
+            is AddNoteEvents.editNote -> {
+
+                scene = saving
+
+                viewModelScope.launch {
+
+                    val noteId = async {
+                        noteDao.insert(event.note)
+                    }.await()
+
+
+                    val components = event.components
+
+                    var childJob = launch {
+                        components.forEach {
+
+                            when(it){
+                                is Paragraph -> {
+                                    paragraphDao.insert(Paragraph_Room(id = it.id, txt = it.txt , note_id = event.note.id.toLong() , index = it.index))
+                                }
+                                is CheckBox -> {
+                                    checkBoxDao.insert(CheckBox_Room(id = it.id, txt = it.txt  , note_id = event.note.id.toLong() , index = it.index , checked = it.checked))
+                                }
+                                is Media -> {
+                                    mediaDao.insert(Media_Room(id = it.id, img = it.img  , note_id = event.note.id.toLong() , index = it.index))
                                 }
                             }
                         }
