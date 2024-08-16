@@ -8,8 +8,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jetapptech.halfwarenote.data.local.dataClasses.CheckBox
 import com.jetapptech.halfwarenote.data.local.dataClasses.Media
+import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
 import com.jetapptech.halfwarenote.data.local.room.dao.Category_Dao
 import com.jetapptech.halfwarenote.data.local.room.dao.CheckBox_Dao
@@ -20,6 +22,7 @@ import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
 import com.jetapptech.halfwarenote.data.local.room.entities.CheckBox_Room
 import com.jetapptech.halfwarenote.data.local.room.entities.Media_Room
 import com.jetapptech.halfwarenote.data.local.room.entities.Paragraph_Room
+import com.jetapptech.halfwarenote.data.local.room.relations.NoteAndComponents
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.events.AddNoteEvents
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.screenData.AddNoteScreen_Scene
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.screenData.main
@@ -51,6 +54,9 @@ class AddNoteViewModel  constructor(
     var categories  = mutableStateListOf<Category_Room>()
         private set
 
+    var note : NoteAndComponents? by mutableStateOf(null)
+        private set
+
 
     init {
 
@@ -62,6 +68,7 @@ class AddNoteViewModel  constructor(
         }
 
     }
+
     fun onEvent(event : AddNoteEvents, onSave : ()-> Unit){
         when(event){
             is AddNoteEvents.saveNoten -> {
@@ -120,6 +127,13 @@ class AddNoteViewModel  constructor(
             else -> {
 
             }
+        }
+    }
+
+
+    fun getNoteById(noteId : Int){
+        viewModelScope.launch {
+            note = noteDao.getNoteById(noteId = noteId)
         }
     }
 

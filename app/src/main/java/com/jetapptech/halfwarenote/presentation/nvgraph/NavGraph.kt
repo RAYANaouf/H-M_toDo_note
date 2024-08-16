@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.jetapptech.halfwarenote.data.local.dataClasses.Note
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white1
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.AddNoteScreen
@@ -119,7 +120,6 @@ fun NavGraph(
             val args = it.toRoute<noteScreen>()
 
             SideEffect {
-//                onShowBars(true , 4f ,false , 8f)
                 currentScreen(noteScreen(noteId = args.noteId))
             }
 
@@ -137,7 +137,6 @@ fun NavGraph(
 
             NoteScreen(
                 note = noteViewModel.note,
-                editable = args.editable
             )
 
 
@@ -147,8 +146,7 @@ fun NavGraph(
         composable<addNoteScreen>{
 
             SideEffect{
-//                onShowBars(true , 4f ,true , 8f)
-                currentScreen(addNoteScreen(""))
+                currentScreen(addNoteScreen())
             }
 
             set_system_bars_color(
@@ -159,14 +157,19 @@ fun NavGraph(
             )
 
 
-//            val context = LocalContext.current
-
-
+            var args = it.toRoute<addNoteScreen>()
             val viewModel : AddNoteViewModel = koinViewModel()
+
+
+            SideEffect {
+                viewModel.getNoteById(args.noteId)
+            }
+
 
             if (viewModel.scene == main){
                 AddNoteScreen(
                     categories = viewModel.categories,
+                    note = viewModel.note,
                     onEvent = {
                         viewModel.onEvent(
                             event  = it,
@@ -183,7 +186,10 @@ fun NavGraph(
                 )
             }
             else{
-                Box(modifier = Modifier){
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                ){
                     Text(text = "Saving ...")
                 }
             }

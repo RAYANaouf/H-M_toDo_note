@@ -22,6 +22,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +43,7 @@ import com.jetapptech.halfwarenote.data.local.dataClasses.NoteComponent
 import com.jetapptech.halfwarenote.data.local.dataClasses.Paragraph
 import com.jetapptech.halfwarenote.data.local.room.entities.Category_Room
 import com.jetapptech.halfwarenote.data.local.room.entities.Note_Room
+import com.jetapptech.halfwarenote.data.local.room.relations.NoteAndComponents
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white2
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.components.NoteColor_Flag
@@ -67,32 +69,31 @@ import java.util.Date
 fun AddNoteScreen(
     modifier   : Modifier = Modifier,
     editable   : Boolean  = false,
-    note       : Note = Note(),
+    note       : NoteAndComponents? = null,
     categories : List<Category_Room>,
     onEvent    : (AddNoteEvents)->Unit = {}
 ) {
 
 
-
     //***************** vars *********************//
 
     var components  = remember {
-        mutableStateListOf<NoteComponent>(Paragraph(index = 0))
+        mutableStateListOf<NoteComponent>()
     }
     var noteTitle  by remember {
-        mutableStateOf(note.title)
+        mutableStateOf(note?.note?.title ?: "")
     }
 
     var noteColor by remember {
-        mutableStateOf(note.color)
+        mutableStateOf(note?.note?.color ?: Color.Cyan.toArgb())
     }
 
     var notePassword by remember {
-        mutableStateOf(note.password)
+        mutableStateOf(note?.note?.password ?: "")
     }
 
     var noteHint by remember {
-        mutableStateOf(note.hint)
+        mutableStateOf(note?.note?.hint ?: "")
     }
 
     var show_colorPicker by remember {
@@ -112,15 +113,12 @@ fun AddNoteScreen(
 
     var index by remember {
         //because the 0 is the first paragraph in the note which is required
-        mutableStateOf(0+1)
+        mutableStateOf(0)
     }
 
     val context = LocalContext.current
 
     val coroutineScope = rememberCoroutineScope()
-
-
-
 
 
 
@@ -133,7 +131,7 @@ fun AddNoteScreen(
             show_colorPicker = false
         },
         onDone = {
-            noteColor = it
+            noteColor = it.toArgb()
             show_colorPicker = false
         },
         modifier = Modifier
@@ -210,6 +208,20 @@ fun AddNoteScreen(
     }
 
 
+    LaunchedEffect(key1 = note) {
+        noteTitle = note?.note?.title ?: ""
+        val arrayComponents = ArrayList<NoteComponent>()
+        if (note?.media != null){
+            arrayComponents.addAll(note.media.map      { Media    ( id = it.id , img = it.img , index = it.index ) })
+            arrayComponents.addAll(note.checkBoxs.map  { CheckBox ( id = it.id , txt = it.txt , checked = it.checked , index = it.index ) })
+            arrayComponents.addAll(note.paragraphs.map { Paragraph( id = it.id , txt = it.txt , index = it.index ) })
+        }
+        order(components = arrayComponents)
+        components.clear()
+        components.addAll(arrayComponents)
+    }
+
+
     // UI
 
 
@@ -220,7 +232,7 @@ fun AddNoteScreen(
     ){
 
         NoteColor_Flag(
-            color = noteColor,
+            color = Color(noteColor),
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(top = 16.dp, end = 16.dp)
@@ -349,7 +361,7 @@ fun AddNoteScreen(
 
                     }
                     "done"->{
-                        val note_room = Note_Room(title = noteTitle , color = noteColor.toArgb() , category_id = selectedCategoryId , password = notePassword , hint = noteHint)
+                        val note_room = Note_Room(title = noteTitle , color = noteColor , category_id = selectedCategoryId , password = notePassword , hint = noteHint)
                         Toast.makeText(context , "${components.size}" , Toast.LENGTH_LONG).show()
                         onEvent(AddNoteEvents.saveNoten(note_room , components))
                     }
@@ -367,6 +379,23 @@ fun AddNoteScreen(
         )
 
 
+
+    }
+
+}
+
+
+fun order(components : ArrayList<NoteComponent>){
+
+    for (i in 0 .. components.size-1){
+
+        for (j in i .. components.size-1){
+            if (components[i]._index > components[j]._index ){
+                var buffer = components[i]
+                components[i] = components[j]
+                components[j] = buffer
+            }
+        }
 
     }
 

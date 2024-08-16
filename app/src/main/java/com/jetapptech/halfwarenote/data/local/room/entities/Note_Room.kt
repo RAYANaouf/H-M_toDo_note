@@ -11,8 +11,8 @@ data class Note_Room(
     val id           : Int     = 0,
     val title        : String  = "",
     val category_id  : Int     = 0,
-    val createdAt    : String  = "1/1/2025",
-    val activateAt   : String  = "1/12/2025",
+    val createdAt    : Long    = Date().time,
+    val activateAt   : Long    = Date().time,
     val color        : Int     = 0,
     val password     : String  = "",
     val hint         : String  = ""

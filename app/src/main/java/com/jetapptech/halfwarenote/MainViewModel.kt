@@ -53,7 +53,7 @@ class MainViewModel : ViewModel() {
                 setTopBar(true , 5f)
                 setBottomBar(false , 0f)
             }
-            addNoteScreen ->{
+            is addNoteScreen ->{
                 setTopBar(true , 5f)
                 setBottomBar(true , 8f)
             }

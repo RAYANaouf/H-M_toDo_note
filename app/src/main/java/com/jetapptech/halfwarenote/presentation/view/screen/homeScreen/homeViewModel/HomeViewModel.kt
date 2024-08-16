@@ -140,9 +140,9 @@ class HomeViewModel(
                         title      = it.note.title,
                         components = noteComponent,
                         type       = type,
-                        createdAt  = Date(it.note.createdAt),
-                        activateAt = Date(it.note.activateAt),
-                        color      = Color(it.note.color),
+                        createdAt  = it.note.createdAt,
+                        activateAt = it.note.activateAt,
+                        color      = it.note.color,
                         password   = it.note.password,
                         hint       = it.note.hint
                     )

@@ -180,7 +180,7 @@ fun ImgNote(
                     Spacer(
                         modifier = Modifier
                             .size(16.dp)
-                            .border(width = 2.dp, color = note.color, shape = CircleShape)
+                            .border(width = 2.dp, color = Color(note.color), shape = CircleShape)
                     )
                 }
             }
@@ -192,7 +192,7 @@ fun ImgNote(
                     .padding( start = 12.dp , end = 12.dp)
             ) {
                 Text(
-                    text = note.createdAt.time.toString(),
+                    text = note.createdAt.toString(),
                     style = TextStyles.HintTextStyles.TextStyleSZ9,
                     maxLines = 1,
                     modifier = Modifier
@@ -243,7 +243,7 @@ fun ImgNote(
                 },
                 onClick = {
                     expanded = false
-                    onClick(addNoteScreen(""))
+                    onClick(addNoteScreen( noteId = note.id ))
                 }
             )
             DropdownMenuItem(

@@ -82,12 +82,6 @@ fun MainScreen(
 
     val viewModel = koinViewModel<MainViewModel>()
 
-    val context = LocalContext.current
-
-//    Toast.makeText( context , "${viewModel.current_screen}" , Toast.LENGTH_LONG).show()
-//    Toast.makeText(context , "is : ${viewModel.current_screen}\n ${noteScreen} \n  ${viewModel.current_screen is  noteScreen} " , Toast.LENGTH_LONG).show()
-
-
     Scaffold(
         topBar = {
             Column(
@@ -141,7 +135,7 @@ fun MainScreen(
                         lateScreen ->{
                             1
                         }
-                        addNoteScreen ->{
+                        is addNoteScreen ->{
                             2
                         }
                         analyticsScreen ->{
@@ -170,9 +164,9 @@ fun MainScreen(
                             }
                         }
                         else if(it == 2){
-                            if (viewModel.current_screen == addNoteScreen)
+                            if (viewModel.current_screen is addNoteScreen)
                                 return@BottomAppBar
-                            navGraphState.navigate(addNoteScreen){
+                            navGraphState.navigate(addNoteScreen()){
 
                             }
                         }

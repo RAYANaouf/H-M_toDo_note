@@ -1,17 +1,20 @@
 package com.jetapptech.halfwarenote.data.local.dataClasses
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import kotlinx.serialization.Serializable
 import java.util.Date
 
 
+@Serializable
 data class Note(
     val id         : Int     = 0,
     val title      : String  = "noteTitle",
     val components : List<NoteComponent> = emptyList(),
-    val createdAt  : Date    = Date(),
-    val activateAt : Date    = Date(),
+    val createdAt  : Long    = Date().time,
+    val activateAt : Long    = Date().time,
     val type       : Int     = 0,
-    val color      : Color   = Color.Cyan,
+    val color      : Int     = Color.Cyan.toArgb(),
     val password   : String  = "",
     val hint       : String  = ""
 )

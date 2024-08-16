@@ -42,26 +42,13 @@ import com.jetapptech.sigmasea.util.objects.TextStyles
 @Composable
 fun NoteScreen(
     note     : Note?,
-    editable : Boolean = false,
     modifier : Modifier = Modifier
 ) {
 
 
     //***************** vars *********************//
-
-    var context = LocalContext.current
-
-
     var components  = remember {
         mutableStateListOf<NoteComponent>()
-    }
-
-    var noteTitle  by remember {
-        mutableStateOf(note?.title ?: "")
-    }
-
-    var noteColor by remember {
-        mutableStateOf(Color.White)
     }
 
     //********************* effects **************************//
@@ -110,11 +97,11 @@ fun NoteScreen(
                                 .padding(start = 30.dp)
                         ) {
                             NoteTitle(
-                                noteTitle = noteTitle,
+                                noteTitle = note?.title ?: "",
                                 onChange  = {
-                                    noteTitle = it
+                                    //nothing
                                 },
-                                enable    = editable,
+                                enable    = false,
                                 modifier  = Modifier
                                     .fillMaxWidth()
                             )
@@ -126,7 +113,7 @@ fun NoteScreen(
                 }
             }
 
-            if (components != null){
+            if (note?.components != null){
                 itemsIndexed(
                     items = components
                 ){ index, item_component ->
@@ -136,11 +123,10 @@ fun NoteScreen(
                         Paragraph(
                             txt = item_component.txt,
                             onChange = { new_txt->
-                                components.removeAt(index)
-                                components.add(index , Paragraph(id = item_component.id , txt = new_txt , index = item_component.index) )
+                                //nothing
                             },
                             hint =  "paragraph ${item_component.index}",
-                            enable = editable,
+                            enable = false,
                             modifier = Modifier
                                 .padding(start = 30.dp , end = 25.dp)
                         )
@@ -149,16 +135,14 @@ fun NoteScreen(
                         checkBox(
                             txt = item_component.txt,
                             onChange = {new_txt->
-                                components.removeAt(index)
-                                components.add(index , CheckBox(id = item_component.id , checked = item_component.checked ,txt = new_txt , index = item_component.index) )
+                                //nothing
                             },
                             hint =  "ToDo $index",
                             checked = item_component.checked,
                             oncheck = {
-                                components.removeAt(index)
-                                components.add(index , CheckBox(id = item_component.id , checked = !item_component.checked , txt = item_component.txt , index = item_component.index) )
+                                //nothing
                             },
-                            enable = editable,
+                            enable = false,
                             modifier = Modifier
                                 .padding(start = 30.dp , end = 25.dp)
                         )

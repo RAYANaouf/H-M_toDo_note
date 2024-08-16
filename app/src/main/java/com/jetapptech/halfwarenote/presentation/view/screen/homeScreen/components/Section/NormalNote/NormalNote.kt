@@ -133,7 +133,7 @@ fun NormalNote(
                     Spacer(
                         modifier = Modifier
                             .size(16.dp)
-                            .border(width = 2.dp, color = note.color, shape = CircleShape)
+                            .border(width = 2.dp, color = Color(note.color), shape = CircleShape)
                     )
                 }
             }
@@ -144,7 +144,7 @@ fun NormalNote(
                 modifier = Modifier
             ) {
                 Text(
-                    text = note.createdAt.time.toString(),
+                    text = note.createdAt.toString(),
                     style = TextStyles.HintTextStyles.TextStyleSZ9,
                     maxLines = 1,
                     modifier = Modifier
@@ -195,13 +195,7 @@ fun NormalNote(
                 },
                 onClick = {
                     expanded = false
-                    onClick(
-//                        com.jetapptech.halfwarenote.presentation.nvgraph.addNoteScreen(
-//                            editable = true,
-//                            noteId = note.id
-//                        )
-                        addNoteScreen("")
-                    )
+                    onClick(addNoteScreen( noteId = note.id ))
                 }
             )
             DropdownMenuItem(

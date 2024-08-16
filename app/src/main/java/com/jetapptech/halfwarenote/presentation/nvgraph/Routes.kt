@@ -16,7 +16,7 @@ object onboardingScreen : AppScreen()
 object homeScreen : AppScreen()
 
 @Serializable
-class addNoteScreen(val noteId : String) : AppScreen()
+class addNoteScreen(val noteId : Int = 0) : AppScreen()
 
 @Serializable
 object lateScreen : AppScreen()

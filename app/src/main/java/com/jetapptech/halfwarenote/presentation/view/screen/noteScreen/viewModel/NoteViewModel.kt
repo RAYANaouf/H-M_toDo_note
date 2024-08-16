@@ -44,9 +44,9 @@ class NoteViewModel  constructor(
             note =  Note(
                 id = noteAndComponents.note.id,
                 title = noteAndComponents.note.title,
-                activateAt = Date(noteAndComponents.note.activateAt),
-                createdAt = Date(noteAndComponents.note.createdAt),
-                color = Color(noteAndComponents.note.color),
+                activateAt = noteAndComponents.note.activateAt,
+                createdAt = noteAndComponents.note.createdAt,
+                color = noteAndComponents.note.color,
                 password = noteAndComponents.note.password,
                 hint     = noteAndComponents.note.hint,
                 components = components
