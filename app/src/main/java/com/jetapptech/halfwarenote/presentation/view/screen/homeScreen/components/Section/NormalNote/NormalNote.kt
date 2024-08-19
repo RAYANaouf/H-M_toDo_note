@@ -1,5 +1,6 @@
 package com.jetapptech.hw_todo_note.presentation.screens.homeScreen.components.NormalNote
 
+import android.graphics.Color.parseColor
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -25,6 +26,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,11 +59,11 @@ import kotlinx.coroutines.launch
 fun NormalNote(
     note         : Note = Note(),
     onClick      : (AppScreen)->Unit = {},
-    onLongClick  : (Int)->Unit = {},
-    onDelete     : (Int)->Unit = {},
-    background   : Color         = Color(0xFFFFFFFF),
-    padding      : PaddingValues = PaddingValues(start = 12.dp , top = 10.dp , bottom = 10.dp , end = 12.dp),
-    modifier     : Modifier        = Modifier
+    onLongClick  : (Int)->Unit       = {},
+    onDelete     : (Int)->Unit       = {},
+    background   : Color             = Color(0xFFFFFFFF),
+    padding      : PaddingValues     = PaddingValues(start = 12.dp , top = 10.dp , bottom = 10.dp , end = 12.dp),
+    modifier     : Modifier          = Modifier
 ) {
 
 
@@ -77,6 +79,19 @@ fun NormalNote(
     //logic var
     var expanded by remember{
         mutableStateOf(false)
+    }
+
+    var first_paragraf : String by remember{
+        mutableStateOf("")
+    }
+
+    SideEffect {
+        note.components.forEach {
+            if(it is Paragraph){
+                first_paragraf = it.txt
+                return@SideEffect
+            }
+        }
     }
 
 
@@ -95,7 +110,7 @@ fun NormalNote(
             .shakable(shakingState)
             .combinedClickable(
                 onClick = {
-                    onClick(noteScreen( editable = false , noteId = note.id))
+                    onClick(noteScreen(editable = false, noteId = note.id))
                 },
                 onLongClick = {
                     expanded = true
@@ -159,8 +174,9 @@ fun NormalNote(
                 if (note.components.size == 0){
                     return@Box
                 }
+
                 Text(
-                    text = (note.components[0] as Paragraph).txt,
+                    text = first_paragraf,
                     style = TextStyles.Monospace_TextStyles.TextStyleSZ9.copy(color = custom_black3),
                     maxLines = 3,
                     modifier = Modifier
@@ -189,7 +205,7 @@ fun NormalNote(
                 text = {
                     Text(
                         text     = "Edit",
-                        style    = TextStyles.inter_TextStyles.TextStyleSZ6.copy(color = custom_white5),
+                        style    = TextStyles.inter_TextStyles.TextStyleSZ6.copy(color = Color(parseColor("#0059FF"))),
                         modifier = Modifier
                     )
                 },

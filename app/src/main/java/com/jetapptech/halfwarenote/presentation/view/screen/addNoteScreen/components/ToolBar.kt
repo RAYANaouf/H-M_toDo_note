@@ -24,10 +24,6 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.jetapptech.halfwarenote.R
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white2
-import com.qamar.elasticview.ElasticState
-import com.qamar.elasticview.ElasticView
-import com.qamar.elasticview.elasticEffect
-
 @Composable
 fun ToolBar(
     onClick : (String)->Unit = {},

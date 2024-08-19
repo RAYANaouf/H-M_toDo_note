@@ -23,7 +23,7 @@ val koinModule = module{
             .databaseBuilder(
                 context = androidContext(),
                 klass   = Database::class.java,
-                name    = "myDatabaseV18"
+                name    = "myDatabaseV19"
             )
 //            .addTypeConverter(Converter_Room())
             .fallbackToDestructiveMigration()

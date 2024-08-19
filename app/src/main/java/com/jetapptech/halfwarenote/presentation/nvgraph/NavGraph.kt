@@ -147,11 +147,11 @@ fun NavGraph(
                         viewModel.onEvent(
                             event  = it,
                             onSave = {
-                                navHostController.navigate(homeScreen){
-                                    popUpTo(homeScreen){
-                                        inclusive = true
-                                    }
-                                }
+//                                navHostController.navigate(homeScreen){
+//                                    popUpTo(homeScreen){
+//                                        inclusive = true
+//                                    }
+//                                }
                             }
                         )
                     },

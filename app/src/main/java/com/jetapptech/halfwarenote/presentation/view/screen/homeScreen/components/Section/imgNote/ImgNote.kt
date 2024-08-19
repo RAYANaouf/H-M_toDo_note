@@ -2,6 +2,7 @@ package com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.componen
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color.parseColor
 import android.util.Base64
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -79,7 +80,6 @@ fun ImgNote(
     val shakingState = rememberShackingState(
         strength = ShakingState.Strength.Custom(15f),
     )
-    val coroutineScope = rememberCoroutineScope()
 
     //logic var
     var expanded by remember{
@@ -87,21 +87,21 @@ fun ImgNote(
     }
 
 
-//    LaunchedEffect(key1 = selectedNote ) {
-//        if (selectedNote != note.id) {
-//            coroutineScope.launch {
-//                shakingState.cancelShake()
-//            }
-//        }
-//        else{
-//            coroutineScope.launch {
-//                shakingState.shake(Int.MAX_VALUE , 35)
-//            }
-//        }
-//    }
-
     var img by rememberSaveable {
         mutableStateOf("")
+    }
+
+    var first_paragraf : String by remember{
+        mutableStateOf("")
+    }
+
+    SideEffect {
+        note.components.forEach {
+            if(it is Paragraph){
+                first_paragraf = it.txt
+                return@SideEffect
+            }
+        }
     }
 
     LaunchedEffect(key1 = true ) {
@@ -209,7 +209,7 @@ fun ImgNote(
                     return@Box
                 }
                 Text(
-                    text = (note.components[0] as Paragraph).txt,
+                    text = first_paragraf,
                     style = TextStyles.Monospace_TextStyles.TextStyleSZ10.copy(color = custom_black3),
                     maxLines = 3,
                     modifier = Modifier
@@ -237,7 +237,7 @@ fun ImgNote(
                 text = {
                     Text(
                         text     = "Edit",
-                        style    = TextStyles.inter_TextStyles.TextStyleSZ6.copy(color = custom_white5),
+                        style    = TextStyles.inter_TextStyles.TextStyleSZ6.copy(color = Color(parseColor("#0059FF"))),
                         modifier = Modifier
                     )
                 },

@@ -156,8 +156,4 @@ dependencies {
 
 
 
-
-    implementation(libs.elasticview)
-
-
 }
