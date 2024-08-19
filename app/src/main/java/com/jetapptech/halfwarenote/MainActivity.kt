@@ -132,17 +132,11 @@ fun MainScreen(
                         homeScreen ->{
                             0
                         }
-                        lateScreen ->{
+                        is addNoteScreen ->{
                             1
                         }
-                        is addNoteScreen ->{
-                            2
-                        }
-                        analyticsScreen ->{
-                            3
-                        }
                         parametersScreen ->{
-                            4
+                            2
                         }
                         else -> {
                             0
@@ -157,33 +151,26 @@ fun MainScreen(
                             }
                         }
                         else if(it == 1){
-                            if (viewModel.current_screen == lateScreen)
-                                return@BottomAppBar
-                            navGraphState.navigate(lateScreen){
-
-                            }
-                        }
-                        else if(it == 2){
                             if (viewModel.current_screen is addNoteScreen)
                                 return@BottomAppBar
                             navGraphState.navigate(addNoteScreen()){
 
                             }
                         }
-                        else if(it == 3){
-                            if (viewModel.current_screen == analyticsScreen)
-                                return@BottomAppBar
-                            navGraphState.navigate(analyticsScreen){
-
-                            }
-                        }
-                        else{
+                        else if(it == 2){
                             if (viewModel.current_screen == parametersScreen)
                                 return@BottomAppBar
                             navGraphState.navigate(parametersScreen){
 
                             }
                         }
+                        else{
+                            if (viewModel.current_screen == homeScreen)
+                                return@BottomAppBar
+                            navGraphState.navigate(homeScreen){
+
+                            }
+                    }
 
                     },
                     elevation = viewModel.bottombar_shadow,

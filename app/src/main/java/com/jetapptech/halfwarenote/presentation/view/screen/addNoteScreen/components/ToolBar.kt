@@ -168,58 +168,46 @@ fun ToolBar(
                         .size(30.dp)
                 )
             }
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier =
-                Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .clip(CircleShape)
-                    .background(custom_white2)
-                    .clickable {
-                        onClick("alarm")
-                    }
-            ) {
-                Image(
-                    painter  = painterResource(id = R.drawable.alarme),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(30.dp)
-                )
-            }
+//            Box(
+//                contentAlignment = Alignment.Center,
+//                modifier =
+//                Modifier
+//                    .weight(1f)
+//                    .fillMaxHeight()
+//                    .clip(CircleShape)
+//                    .background(custom_white2)
+//                    .clickable {
+//                        onClick("alarm")
+//                    }
+//            ) {
+//                Image(
+//                    painter  = painterResource(id = R.drawable.alarme),
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .size(30.dp)
+//                )
+//            }
         }
 
 
 
-        ElasticView(
+
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
-                .elasticEffect {
-                    
+                .clip(CircleShape)
+                .background(custom_white2)
+                .layoutId("lock")
+                .clickable {
+                    onClick("lock")
                 }
-                .layoutId("lock"),
-            onClick = {
-
-            }
         ) {
-            Box(
-                contentAlignment = Alignment.Center,
+            Image(
+                painter  = painterResource(id = R.drawable.cadenas),
+                contentDescription = null,
                 modifier = Modifier
-                    .fillMaxSize()
-                    .clip(CircleShape)
-                    .background(custom_white2)
-                    .clickable {
-                        onClick("lock")
-                    }
-            ) {
-
-                Image(
-                    painter  = painterResource(id = R.drawable.cadenas),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(30.dp)
-                )
-            }
-
+                    .size(30.dp)
+            )
         }
 
 

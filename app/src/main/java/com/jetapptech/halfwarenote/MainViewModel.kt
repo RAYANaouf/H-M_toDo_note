@@ -13,6 +13,7 @@ import com.jetapptech.halfwarenote.presentation.nvgraph.homeScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.lateScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.noteScreen
 import com.jetapptech.halfwarenote.presentation.nvgraph.onboardingScreen
+import com.jetapptech.halfwarenote.presentation.nvgraph.parametersScreen
 
 class MainViewModel : ViewModel() {
 
@@ -54,6 +55,10 @@ class MainViewModel : ViewModel() {
                 setBottomBar(false , 0f)
             }
             is addNoteScreen ->{
+                setTopBar(true , 5f)
+                setBottomBar(true , 8f)
+            }
+            parametersScreen ->{
                 setTopBar(true , 5f)
                 setBottomBar(true , 8f)
             }

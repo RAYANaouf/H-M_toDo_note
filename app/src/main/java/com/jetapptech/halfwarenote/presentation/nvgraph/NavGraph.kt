@@ -26,8 +26,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.jetapptech.halfwarenote.data.local.dataClasses.Note
+import com.jetapptech.halfwarenote.presentation.ui.theme.custom_background
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white0
 import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white1
+import com.jetapptech.halfwarenote.presentation.ui.theme.custom_white2
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.AddNoteScreen
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.addNoteViewModel.AddNoteViewModel
 import com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.screenData.main
@@ -36,6 +38,7 @@ import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.HomeScree
 import com.jetapptech.halfwarenote.presentation.view.screen.homeScreen.homeViewModel.HomeViewModel
 import com.jetapptech.halfwarenote.presentation.view.screen.noteScreen.viewModel.NoteViewModel
 import com.jetapptech.halfwarenote.presentation.view.screen.onboardingScreen.OnboardingScreen
+import com.jetapptech.halfwarenote.presentation.view.screen.parameterScreen.ParameterScreen
 import com.jetapptech.hw_todo_note.presentation.screens.noteScreen.NoteScreen
 import org.koin.androidx.compose.koinViewModel
 
@@ -107,41 +110,11 @@ fun NavGraph(
                         )
                 },
                 modifier = Modifier
-                    .background(custom_white1)
+                    .background(custom_background)
             )
 
 
         }
-
-
-
-        composable<noteScreen>{
-
-            val args = it.toRoute<noteScreen>()
-
-            SideEffect {
-                currentScreen(noteScreen(noteId = args.noteId))
-            }
-
-            set_system_bars_color(
-                statusBarColor     = custom_white0,
-                lightStatusBar     = true,
-                navigationBarColor = custom_white0,
-                lightNavigationBar = false
-            )
-
-
-            val noteViewModel = koinViewModel<NoteViewModel>()
-
-            noteViewModel.getNoteById( noteId = args.noteId )
-
-            NoteScreen(
-                note = noteViewModel.note,
-            )
-
-
-        }
-
 
         composable<addNoteScreen>{
 
@@ -183,12 +156,14 @@ fun NavGraph(
                         )
                     },
                     modifier = Modifier
+                        .background(custom_background)
                 )
             }
             else{
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
+                        .background(custom_white1)
                 ){
                     Text(text = "Saving ...")
                 }
@@ -196,6 +171,55 @@ fun NavGraph(
 
 
         }
+
+        composable<parametersScreen> {
+            SideEffect{
+                currentScreen(parametersScreen)
+            }
+
+            set_system_bars_color(
+                statusBarColor     = custom_white0,
+                lightStatusBar     = true,
+                navigationBarColor = custom_white0,
+                lightNavigationBar = false
+            )
+
+            ParameterScreen(
+                modifier = Modifier
+                    .background(custom_background)
+            )
+        }
+
+
+        composable<noteScreen>{
+
+            val args = it.toRoute<noteScreen>()
+
+            SideEffect {
+                currentScreen(noteScreen(noteId = args.noteId))
+            }
+
+            set_system_bars_color(
+                statusBarColor     = custom_white0,
+                lightStatusBar     = true,
+                navigationBarColor = custom_white0,
+                lightNavigationBar = false
+            )
+
+
+            val noteViewModel = koinViewModel<NoteViewModel>()
+
+            noteViewModel.getNoteById( noteId = args.noteId )
+
+            NoteScreen(
+                note = noteViewModel.note,
+                modifier = Modifier
+                    .background(custom_background)
+            )
+
+
+        }
+
 
         composable<lateScreen>{
 
@@ -223,7 +247,6 @@ fun NavGraph(
 
         composable<analyticsScreen>{
             SideEffect {
-//                onShowBars(true , 4f ,true , 8f)
                 currentScreen(analyticsScreen)
             }
 
@@ -245,7 +268,6 @@ fun NavGraph(
 
         composable<aboutUsScreen>{
             SideEffect {
-//                onShowBars(false , 0f ,false , 0f)
                 currentScreen(aboutUsScreen)
             }
             set_system_bars_color(
