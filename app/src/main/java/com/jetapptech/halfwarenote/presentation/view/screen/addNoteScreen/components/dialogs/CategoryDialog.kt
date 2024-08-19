@@ -171,7 +171,8 @@ fun CategoryDialog(
                 }
 
 
-                AnimatedVisibility(visible = create ) {
+
+                if(create){
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
