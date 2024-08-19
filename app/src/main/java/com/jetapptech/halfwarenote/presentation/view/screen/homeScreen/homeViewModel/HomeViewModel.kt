@@ -70,7 +70,8 @@ class HomeViewModel(
 
     private fun deleteNote(noteId : Int , onSuccess : ()->Unit){
         viewModelScope.launch {
-            noteDao.delete(Note_Room(id = noteId ))
+//            noteDao.delete(Note_Room(id = noteId ))
+            noteDao.deleteWithAllImages(noteId)
             withContext(Dispatchers.Main){
                 onSuccess()
             }

@@ -7,6 +7,7 @@ import androidx.room.Upsert
 import com.jetapptech.halfwarenote.data.local.room.entities.Note_Room
 import com.jetapptech.halfwarenote.data.local.room.relations.NoteAndComponents
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 @Dao
 interface Note_Dao{
@@ -16,6 +17,24 @@ interface Note_Dao{
 
     @Delete
     suspend fun delete(note  : Note_Room)
+
+
+    @Query("Select img from media where note_id = :noteId")
+    suspend fun getMediaFilePaths(noteId: Int):List<String>
+
+    @Transaction
+    suspend fun deleteWithAllImages(noteId  : Int){
+        val mediaFilePaths = getMediaFilePaths(noteId)
+
+        mediaFilePaths.forEach { path->
+            val file = File(path)
+            if (file.exists()){
+                file.delete()
+            }
+        }
+
+        delete(Note_Room(id = noteId-))
+    }
 
 
 
