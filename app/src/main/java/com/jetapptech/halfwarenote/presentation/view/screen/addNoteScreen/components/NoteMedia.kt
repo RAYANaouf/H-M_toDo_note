@@ -56,7 +56,8 @@ fun NoteMedia(
 
                     },
                     onLongClick = {
-                        expanded = true
+                        if (enable)
+                            expanded = true
                     }
                 )
         )

@@ -330,7 +330,7 @@ fun AddNoteScreen(
                 else if (item_component is Media){
                     NoteMedia(
                         media = item_component,
-                        enable = (note == null),
+                        enable = true,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 30.dp, end = 25.dp)
