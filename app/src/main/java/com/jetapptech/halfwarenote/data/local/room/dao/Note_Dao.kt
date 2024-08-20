@@ -33,7 +33,7 @@ interface Note_Dao{
             }
         }
 
-        delete(Note_Room(id = noteId-))
+        delete(Note_Room(id = noteId))
     }
 
 

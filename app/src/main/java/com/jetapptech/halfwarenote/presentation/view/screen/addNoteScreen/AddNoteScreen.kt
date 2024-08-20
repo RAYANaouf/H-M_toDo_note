@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -67,7 +68,6 @@ import java.util.Date
 @Composable
 fun AddNoteScreen(
     modifier   : Modifier = Modifier,
-    editable   : Boolean  = false,
     note       : NoteAndComponents? = null,
     categories : List<Category_Room>,
     onEvent    : (AddNoteEvents)->Unit = {}
@@ -112,7 +112,14 @@ fun AddNoteScreen(
 
     var index by remember {
         //because the 0 is the first paragraph in the note which is required
-        mutableStateOf(0)
+        mutableIntStateOf(
+            if (note == null){
+                0
+            }
+            else{
+                note.media.size + note.paragraphs.size + note.checkBoxs.size
+            }
+        )
     }
 
     val context = LocalContext.current
@@ -366,7 +373,6 @@ fun AddNoteScreen(
                             onEvent(AddNoteEvents.saveNote(note_room , components))
                         }
                         else{
-//                            Toast.makeText(context , "${note.note.id}" , Toast.LENGTH_LONG).show()
                             note_room = Note_Room( id = note.note.id, title = noteTitle , color = noteColor , category_id = selectedCategoryId , password = notePassword , hint = noteHint)
                             onEvent(AddNoteEvents.editNote(note_room , components))
                         }
