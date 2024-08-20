@@ -261,15 +261,15 @@ fun AddNoteScreen(
                         modifier = Modifier
                             .weight(1f)
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .padding(start = 30.dp , top = 16.dp)
-                        ) {
-                            Text(
-                                text = "8/7/2024",
-                                style = TextStyles.Monospace_TextStyles.TextStyleSZ9
-                            )
-                        }
+//                        Box(
+//                            modifier = Modifier
+//                                .padding(start = 30.dp , top = 16.dp)
+//                        ) {
+//                            Text(
+//                                text = "8/7/2024",
+//                                style = TextStyles.Monospace_TextStyles.TextStyleSZ9
+//                            )
+//                        }
 
                         Spacer(modifier = Modifier.height(26.dp))
 
@@ -304,6 +304,7 @@ fun AddNoteScreen(
                         onChange = {
                             components[index] = Paragraph(id =  item_component.id , txt = it , index = item_component.index )
                         },
+                        enable = (note == null),
                         hint =  "paragraph ${item_component.index}",
                         modifier = Modifier
                             .padding(start = 30.dp , end = 25.dp)
@@ -315,6 +316,7 @@ fun AddNoteScreen(
                         onChange = {
                             components[index] = CheckBox(id =  item_component.id , txt = it , checked = item_component.checked , index = item_component.index )
                         },
+                        enable = (note == null),
                         hint =  "ToDo $index",
                         checked = item_component.checked,
                         oncheck = {
@@ -328,6 +330,7 @@ fun AddNoteScreen(
                 else if (item_component is Media){
                     NoteMedia(
                         media = item_component,
+                        enable = (note == null),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 30.dp, end = 25.dp)
