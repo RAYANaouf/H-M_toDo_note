@@ -143,9 +143,9 @@ fun NavGraph(
                 AddNoteScreen(
                     categories = viewModel.categories,
                     note = viewModel.note,
-                    onEvent = {
+                    onEvent = { event ->
                         viewModel.onEvent(
-                            event  = it,
+                            event  = event,
                             onSave = {
                                 navHostController.navigate(homeScreen){
                                     popUpTo(homeScreen){

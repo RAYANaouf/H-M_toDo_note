@@ -2,6 +2,7 @@ package com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -332,10 +333,12 @@ fun AddNoteScreen(
                         media = item_component,
                         enable = true,
                         onDelete = {
+
+
                             if (note == null)
                                 components.remove(item_component)
                             else{
-                                AddNoteEvents.deleteImage(item_component.id)
+                                onEvent(AddNoteEvents.deleteImage(item_component.id))
                                 components.remove(item_component)
                             }
                         },

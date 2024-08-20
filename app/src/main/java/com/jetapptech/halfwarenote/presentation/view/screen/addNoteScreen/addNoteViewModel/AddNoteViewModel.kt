@@ -1,6 +1,7 @@
 package com.jetapptech.halfwarenote.presentation.view.screen.addNoteScreen.addNoteViewModel
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -122,7 +123,7 @@ class AddNoteViewModel  constructor(
 
                 viewModelScope.launch {
 
-                    val noteId = async {
+                    async {
                         noteDao.insert(event.note)
                     }.await()
 
