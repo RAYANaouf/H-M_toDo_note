@@ -331,6 +331,14 @@ fun AddNoteScreen(
                     NoteMedia(
                         media = item_component,
                         enable = true,
+                        onDelete = {
+                            if (note == null)
+                                components.remove(item_component)
+                            else{
+                                AddNoteEvents.deleteImage(item_component.id)
+                                components.remove(item_component)
+                            }
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 30.dp, end = 25.dp)

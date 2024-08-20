@@ -32,7 +32,8 @@ import java.io.File
 @Composable
 fun NoteMedia(
     media: Media,
-    enable   : Boolean = true,
+    enable   : Boolean  = true,
+    onDelete : ()->Unit = {},
     modifier : Modifier = Modifier
 ) {
 
@@ -99,7 +100,7 @@ fun NoteMedia(
                 },
                 onClick = {
                     expanded = false
-//                    onDelete(note.id)
+                    onDelete()
                 }
             )
 

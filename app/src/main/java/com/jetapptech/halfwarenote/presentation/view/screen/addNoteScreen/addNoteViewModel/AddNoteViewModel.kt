@@ -169,6 +169,14 @@ class AddNoteViewModel  constructor(
 
             }
 
+            is AddNoteEvents.deleteImage -> {
+
+                viewModelScope.launch {
+                    mediaDao.delete(Media_Room( id = event.imageId ))
+                }
+
+            }
+
             else -> {
 
             }
