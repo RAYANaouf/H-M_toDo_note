@@ -75,6 +75,7 @@ fun AddNoteScreen(
 
 
     //***************** vars *********************//
+    val context = LocalContext.current
 
     var components  = remember {
         mutableStateListOf<NoteComponent>()
@@ -110,19 +111,20 @@ fun AddNoteScreen(
         mutableStateOf(0)
     }
 
-    var index by remember {
-        //because the 0 is the first paragraph in the note which is required
-        mutableIntStateOf(
-            if (note == null){
-                0
-            }
-            else{
-                note.media.size + note.paragraphs.size + note.checkBoxs.size
-            }
-        )
-    }
+//    var index by remember {
+//        //because the 0 is the first paragraph in the note which is required
+//        mutableIntStateOf(
+//            if (note == null){
+//                0
+//            }
+//            else{
+//                Toast.makeText(context , "${note.media.size + note.paragraphs.size + note.checkBoxs.size}" , Toast.LENGTH_LONG).show()
+//                note.media.size + note.paragraphs.size + note.checkBoxs.size
+//            }
+//        )
+//    }
 
-    val context = LocalContext.current
+
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -199,7 +201,7 @@ fun AddNoteScreen(
                     FileOutputStream(file).use { outputStream ->
                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
                     }
-                    components.add(Media(img = file.absolutePath , index = index++))
+                    components.add(Media(img = file.absolutePath , index = components.size))
 
 
                 }
@@ -352,10 +354,10 @@ fun AddNoteScreen(
             onClick = {event->
                 when(event){
                     "paragraph"->{
-                        components.add(Paragraph(index = index++))
+                        components.add(Paragraph(index = components.size))
                     }
                     "check_box"->{
-                        components.add(CheckBox(index = index++))
+                        components.add(CheckBox(index = components.size))
                     }
                     "gallery"->{
                         getImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))

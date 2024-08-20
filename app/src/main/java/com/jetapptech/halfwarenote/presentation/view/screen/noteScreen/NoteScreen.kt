@@ -80,15 +80,15 @@ fun NoteScreen(
                         modifier = Modifier
                             .weight(1f)
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .padding(start = 30.dp, top = 16.dp)
-                        ) {
-                            Text(
-                                text = "8/7/2024",
-                                style = TextStyles.Monospace_TextStyles.TextStyleSZ9
-                            )
-                        }
+//                        Box(
+//                            modifier = Modifier
+//                                .padding(start = 30.dp, top = 16.dp)
+//                        ) {
+//                            Text(
+//                                text = "8/7/2024",
+//                                style = TextStyles.Monospace_TextStyles.TextStyleSZ9
+//                            )
+//                        }
 
                         Spacer(modifier = Modifier.height(26.dp))
 
