@@ -7,9 +7,9 @@ import com.jetapptech.halfwarenote.data.local.room.entities.Note_Room
 
 sealed class AddNoteEvents{
 
-    class saveNote(val note: Note_Room, val components : List<NoteComponent>) : AddNoteEvents()
-    class editNote(val note: Note_Room, val components : List<NoteComponent>) : AddNoteEvents()
-    class deleteImage(val imageId: Int) : AddNoteEvents()
+    class saveNote(val note: Note_Room , val components : List<NoteComponent>) : AddNoteEvents()
+    class editNote(val note: Note_Room , val components : List<NoteComponent>) : AddNoteEvents()
+    class deleteImage(val imageId: Int , val imagePath : String) : AddNoteEvents()
     class createCategory(val category: String) : AddNoteEvents()
 
 }

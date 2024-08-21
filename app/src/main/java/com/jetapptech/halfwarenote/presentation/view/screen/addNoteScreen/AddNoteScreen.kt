@@ -338,7 +338,7 @@ fun AddNoteScreen(
                             if (note == null)
                                 components.remove(item_component)
                             else{
-                                onEvent(AddNoteEvents.deleteImage(item_component.id))
+                                onEvent(AddNoteEvents.deleteImage(item_component.id , item_component.img))
                                 components.remove(item_component)
                             }
                         },
